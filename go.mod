@@ -1,4 +1,4 @@
-module github.com/go-acme/esa-20240910/v4
+module github.com/go-acme/esa-20240910/v2
 
 go 1.14
 
