@@ -1,0 +1,562 @@
+2025-11-03 Version: v2.39.3
+- Update API CreateOriginProtection: add request parameters AutoConfirmIPList.
+- Update API GetOriginProtection: add response parameters Body.AutoConfirmIPList.
+- Update API GetOriginProtection: add response parameters Body.RegionalCurrentIPWhitelist.
+- Update API GetOriginProtection: add response parameters Body.RegionalDiffIPWhitelist.
+- Update API GetOriginProtection: add response parameters Body.RegionalLatestIPWhitelist.
+- Update API UpdateOriginProtection: add request parameters AutoConfirmIPList.
+
+
+2025-10-14 Version: v2.39.2
+- Update API BatchGetExpressionFields: add request parameters InstanceId.
+- Update API BatchGetExpressionFields: add request parameters Kind.
+- Update API BatchGetExpressionFields: add request parameters PlanNameEn.
+- Update API ListWafManagedRules: add request parameters InstanceId.
+- Update API ListWafManagedRules: add request parameters ManagedRuleset.
+- Update API ListWafTemplateRules: add request parameters InstanceId.
+- Update API ListWafUsageOfRules: add request parameters InstanceId.
+- Update API ListWafUsageOfRules: add response parameters Body.BatchConfigUsage.
+- Update API ListWafUsageOfRules: add response parameters Body.InstanceUsage.
+
+
+2025-10-09 Version: v2.39.1
+- Generated golang 2024-09-10 for ESA.
+
+2025-09-22 Version: v2.39.0
+- Support API GetRoutineCodeVersion.
+- Support API UpdateRoutineConfigDescription.
+- Update API PurchaseRatePlan: add request parameters Channel.
+
+
+2025-09-18 Version: v2.38.1
+- Update API CreateTransportLayerApplication: add request parameters StaticIp.
+- Update API GetTransportLayerApplication: add response parameters Body.StaticIp.
+- Update API GetTransportLayerApplication: add response parameters Body.StaticIpV4List.
+- Update API ListTransportLayerApplications: add response parameters Body.Applications.$.StaticIp.
+- Update API ListTransportLayerApplications: add response parameters Body.Applications.$.StaticIpV4List.
+- Update API UpdateTransportLayerApplication: add request parameters StaticIp.
+
+
+2025-09-17 Version: v2.38.0
+- Support API CreateTransportLayerApplication.
+- Support API DeleteTransportLayerApplication.
+- Support API GetTransportLayerApplication.
+- Support API ListTransportLayerApplications.
+- Support API UpdateTransportLayerApplication.
+- Update API DeleteRecord: add request parameters SecurityToken.
+
+
+2025-09-16 Version: v2.37.0
+- Support API CreateHttpIncomingRequestHeaderModificationRule.
+- Support API CreateHttpIncomingResponseHeaderModificationRule.
+- Support API CreateRoutineCodeDeployment.
+- Support API CreateRoutineWithAssetsCodeVersion.
+- Support API DeleteHttpIncomingRequestHeaderModificationRule.
+- Support API DeleteHttpIncomingResponseHeaderModificationRule.
+- Support API GetHttpIncomingRequestHeaderModificationRule.
+- Support API GetHttpIncomingResponseHeaderModificationRule.
+- Support API ListHttpIncomingRequestHeaderModificationRules.
+- Support API ListHttpIncomingResponseHeaderModificationRules.
+- Support API UpdateHttpIncomingRequestHeaderModificationRule.
+- Support API UpdateHttpIncomingResponseHeaderModificationRule.
+- Update API CreateRoutine: add request parameters HasAssets.
+- Update API GetRoutine: add response parameters Body.HasAssets.
+- Update API GetRoutine: add response parameters Body.Envs.$.CodeDeploy.
+- Update API ListRoutineCodeVersions: add response parameters Body.CodeVersions.$.BuildId.
+- Update API ListRoutineCodeVersions: add response parameters Body.CodeVersions.$.ConfOptions.
+- Update API ListRoutineCodeVersions: add response parameters Body.CodeVersions.$.ExtraInfo.
+- Update API ListRoutineCodeVersions: add response parameters Body.CodeVersions.$.Status.
+- Update API ListUserRoutines: add response parameters Body.Routines.$.DefaultRelatedRecord.
+- Update API ListUserRoutines: add response parameters Body.Routines.$.HasAssets.
+
+
+2025-08-21 Version: v2.36.2
+- Update API GetRecord: add response parameters Body.RecordModel.Data.Tags.
+- Update API ListRecords: add response parameters Body.Records.$.Data.Tags.
+
+
+2025-08-21 Version: v2.36.2
+- Update API GetRecord: add response parameters Body.RecordModel.Data.Tags.
+- Update API ListRecords: add response parameters Body.Records.$.Data.Tags.
+
+
+2025-08-21 Version: v2.36.2
+- Update API GetRecord: add response parameters Body.RecordModel.Data.Tags.
+- Update API ListRecords: add response parameters Body.Records.$.Data.Tags.
+
+
+2025-08-18 Version: v2.36.1
+- Generated golang 2024-09-10 for ESA.
+
+2025-07-10 Version: v2.36.0
+- Support API DescribeUrlObservationData.
+- Update API CreateRoutineRoute: add request parameters Fallback.
+- Update API GetEdgeContainerAppResourceStatus: add response parameters Body.Regions.$.IsOffline.
+- Update API GetEdgeContainerAppResourceStatus: add response parameters Body.Regions.$.IsStaging.
+- Update API GetRoutineRoute: add response parameters Body.Fallback.
+- Update API ListRoutineRoutes: add response parameters Body.Configs.$.Fallback.
+- Update API ListSiteRoutes: add response parameters Body.Configs.$.Fallback.
+- Update API UpdateRoutineRoute: add request parameters Fallback.
+
+
+2025-06-24 Version: v2.35.0
+- Support API CreateUrlObservation.
+- Support API DeleteUrlObservation.
+- Support API ListESAIPInfo.
+- Support API ListUrlObservations.
+- Support API TagResources.
+- Support API UpdateUrlObservation.
+- Update API CreateSiteDeliveryTask: add request parameters FilterVer.
+- Update API CreateSiteDeliveryTask: add request parameters HttpDelivery.LastLogSplit.
+- Update API CreateSiteDeliveryTask: add request parameters HttpDelivery.LogSplit.
+- Update API CreateSiteDeliveryTask: add request parameters HttpDelivery.LogSplitWords.
+- Update API CreateUserDeliveryTask: add request parameters FilterVer.
+- Update API GetSiteDeliveryTask: add response parameters Body.FilterVer.
+- Update API GetSiteDeliveryTask: add response parameters Body.RawRule.
+- Update API GetUserDeliveryTask: add response parameters Body.FilterVer.
+- Update API GetUserDeliveryTask: add response parameters Body.RawRule.
+- Update API UpdateSiteDeliveryTask: add request parameters FilterVer.
+- Update API UpdateUserDeliveryTask: add request parameters FilterVer.
+
+
+2025-06-16 Version: v2.34.1
+- Update API CreateLoadBalancer: add request parameters Monitor.MonitoringRegion.
+- Update API GetLoadBalancer: add response parameters Body.Monitor.MonitoringRegion.
+- Update API ListLoadBalancers: add response parameters Body.LoadBalancers.$.Monitor.MonitoringRegion.
+- Update API UpdateLoadBalancer: add request parameters Monitor.MonitoringRegion.
+
+
+2025-06-10 Version: v2.34.0
+- Support API CreateVideoProcessing.
+- Support API DeleteVideoProcessing.
+- Support API GetVideoProcessing.
+- Support API ListVideoProcessings.
+- Support API UpdateVideoProcessing.
+- Update API UpdateRecord: add request parameters Type.
+
+
+2025-06-03 Version: v2.33.1
+- Update API CreateCustomScenePolicy: add request parameters SiteIds.
+- Update API CreateCustomScenePolicy: add response parameters Body.SiteIds.
+- Update API CreateHttpsApplicationConfiguration: add request parameters HttpsNoSniDeny.
+- Update API CreateHttpsApplicationConfiguration: add request parameters HttpsSniVerify.
+- Update API CreateHttpsApplicationConfiguration: add request parameters HttpsSniWhitelist.
+- Update API DescribeCustomScenePolicies: add response parameters Body.DataModule.$.SiteIds.
+- Update API GetHttpsApplicationConfiguration: add response parameters Body.HttpsNoSniDeny.
+- Update API GetHttpsApplicationConfiguration: add response parameters Body.HttpsSniVerify.
+- Update API GetHttpsApplicationConfiguration: add response parameters Body.HttpsSniWhitelist.
+- Update API ListHttpsApplicationConfigurations: add response parameters Body.Configs.$.HttpsNoSniDeny.
+- Update API ListHttpsApplicationConfigurations: add response parameters Body.Configs.$.HttpsSniVerify.
+- Update API ListHttpsApplicationConfigurations: add response parameters Body.Configs.$.HttpsSniWhitelist.
+- Update API UpdateCustomScenePolicy: add request parameters SiteIds.
+- Update API UpdateCustomScenePolicy: add response parameters Body.SiteIds.
+- Update API UpdateHttpsApplicationConfiguration: add request parameters HttpsNoSniDeny.
+- Update API UpdateHttpsApplicationConfiguration: add request parameters HttpsSniVerify.
+- Update API UpdateHttpsApplicationConfiguration: add request parameters HttpsSniWhitelist.
+
+
+2025-05-21 Version: v2.33.0
+- Support API DescribeSiteLogs.
+- Support API OpenErService.
+- Update API CreateRoutineRelatedRecord: add response parameters Body.RecordId.
+- Update API GetManagedTransform: add response parameters Body.RealClientIpHeaderName.
+- Update API UpdateManagedTransform: add request parameters RealClientIpHeaderName.
+
+
+2025-05-08 Version: v2.32.0
+- Support API ListRoutineCodeVersions.
+
+
+2025-04-17 Version: v2.31.1
+- Update API CreateOriginRule: add request parameters Follow302Enable.
+- Update API CreateOriginRule: add request parameters Follow302MaxTries.
+- Update API CreateOriginRule: add request parameters Follow302RetainArgs.
+- Update API CreateOriginRule: add request parameters Follow302RetainHeader.
+- Update API CreateOriginRule: add request parameters Follow302TargetHost.
+- Update API GetOriginRule: add response parameters Body.Follow302Enable.
+- Update API GetOriginRule: add response parameters Body.Follow302MaxTries.
+- Update API GetOriginRule: add response parameters Body.Follow302RetainArgs.
+- Update API GetOriginRule: add response parameters Body.Follow302RetainHeader.
+- Update API GetOriginRule: add response parameters Body.Follow302TargetHost.
+- Update API GetWafRule: add response parameters Body.RulesetId.
+- Update API ListOriginRules: add response parameters Body.Configs.$.Follow302Enable.
+- Update API ListOriginRules: add response parameters Body.Configs.$.Follow302MaxTries.
+- Update API ListOriginRules: add response parameters Body.Configs.$.Follow302RetainArgs.
+- Update API ListOriginRules: add response parameters Body.Configs.$.Follow302RetainHeader.
+- Update API ListOriginRules: add response parameters Body.Configs.$.Follow302TargetHost.
+- Update API UpdateOriginRule: add request parameters Follow302Enable.
+- Update API UpdateOriginRule: add request parameters Follow302MaxTries.
+- Update API UpdateOriginRule: add request parameters Follow302RetainArgs.
+- Update API UpdateOriginRule: add request parameters Follow302RetainHeader.
+- Update API UpdateOriginRule: add request parameters Follow302TargetHost.
+
+
+2025-04-15 Version: v2.31.0
+- Support API GetErService.
+
+
+2025-04-11 Version: v2.30.1
+- Update API ListWafTemplateRules: add request parameters QueryArgs.Kinds.
+
+
+2025-04-10 Version: v2.30.0
+- Support API ListCertificatesByRecord.
+- Update API CreateHttpRequestHeaderModificationRule: add request parameters RequestHeaderModification.$.Type.
+- Update API CreateHttpResponseHeaderModificationRule: add request parameters ResponseHeaderModification.$.Type.
+- Update API GetHttpRequestHeaderModificationRule: add response parameters Body.RequestHeaderModification.$.Type.
+- Update API GetHttpResponseHeaderModificationRule: add response parameters Body.ResponseHeaderModification.$.Type.
+- Update API ListHttpRequestHeaderModificationRules: add response parameters Body.Configs.$.RequestHeaderModification.$.Type.
+- Update API ListHttpResponseHeaderModificationRules: add response parameters Body.Configs.$.ResponseHeaderModification.$.Type.
+- Update API UpdateHttpRequestHeaderModificationRule: add request parameters RequestHeaderModification.$.Type.
+- Update API UpdateHttpResponseHeaderModificationRule: add request parameters ResponseHeaderModification.$.Type.
+
+
+2025-04-08 Version: v2.29.0
+- Support API ListRoutineRelatedRecords.
+- Support API ListUserRoutines.
+- Update API RollbackEdgeContainerAppVersion: add request parameters Percentage.
+- Update API RollbackEdgeContainerAppVersion: add request parameters UsedPercent.
+
+
+2025-04-07 Version: v2.28.0
+- Support API CreateRoutineRoute.
+- Support API DeleteRoutineRoute.
+- Support API GetRoutineRoute.
+- Support API ListRoutineRoutes.
+- Support API ListSiteRoutes.
+- Support API UpdateRoutineRoute.
+
+
+2025-04-02 Version: v2.27.0
+- Support API DescribeSiteTimeSeriesData.
+- Support API DescribeSiteTopData.
+
+
+2025-04-01 Version: v2.26.0
+- Support API GetEdgeContainerAppResourceStatus.
+- Update API CreateOriginRule: add request parameters OriginReadTimeout.
+- Update API GetOriginRule: add response parameters Body.OriginReadTimeout.
+- Update API ListOriginRules: add response parameters Body.Configs.$.OriginReadTimeout.
+- Update API UpdateOriginRule: add request parameters OriginReadTimeout.
+
+
+2025-03-31 Version: v2.25.0
+- Support API GetCrossBorderOptimization.
+- Support API UpdateCrossBorderOptimization.
+
+
+2025-03-27 Version: v2.24.0
+- Support API BatchCreateWafRules.
+- Support API BatchUpdateWafRules.
+- Support API CreateWafRule.
+- Support API CreateWafRuleset.
+- Support API DeleteOriginCaCertificate.
+- Support API DeleteOriginClientCertificate.
+- Support API DeleteSiteOriginClientCertificate.
+- Support API DeleteWafRule.
+- Support API DeleteWafRuleset.
+- Support API GetOriginCaCertificate.
+- Support API GetOriginClientCertificate.
+- Support API GetOriginClientCertificateHostnames.
+- Support API GetSiteOriginClientCertificate.
+- Support API GetWafRule.
+- Support API GetWafRuleset.
+- Support API ListOriginCaCertificates.
+- Support API ListOriginClientCertificates.
+- Support API ListWafRules.
+- Support API ListWafRulesets.
+- Support API SetOriginClientCertificateHostnames.
+- Support API UpdateWafRule.
+- Support API UpdateWafRuleset.
+- Support API UploadOriginCaCertificate.
+- Support API UploadOriginClientCertificate.
+- Support API UploadSiteOriginClientCertificate.
+- Update API CreateCacheRule: add request parameters Sequence.
+- Update API CreateCompressionRule: add request parameters Sequence.
+- Update API CreateHttpRequestHeaderModificationRule: add request parameters Sequence.
+- Update API CreateHttpResponseHeaderModificationRule: add request parameters Sequence.
+- Update API CreateHttpsApplicationConfiguration: add request parameters Sequence.
+- Update API CreateHttpsBasicConfiguration: add request parameters Sequence.
+- Update API CreateImageTransform: add request parameters Sequence.
+- Update API CreateNetworkOptimization: add request parameters Sequence.
+- Update API CreateOriginRule: add request parameters Sequence.
+- Update API CreateRedirectRule: add request parameters Sequence.
+- Update API CreateRewriteUrlRule: add request parameters Sequence.
+- Update API GetIPv6: add response parameters Body.Region.
+- Update API UpdateCacheRule: add request parameters Sequence.
+- Update API UpdateCompressionRule: add request parameters Sequence.
+- Update API UpdateHttpRequestHeaderModificationRule: add request parameters Sequence.
+- Update API UpdateHttpResponseHeaderModificationRule: add request parameters Sequence.
+- Update API UpdateHttpsApplicationConfiguration: add request parameters Sequence.
+- Update API UpdateHttpsBasicConfiguration: add request parameters Sequence.
+- Update API UpdateIPv6: add request parameters Region.
+- Update API UpdateImageTransform: add request parameters Sequence.
+- Update API UpdateNetworkOptimization: add request parameters Sequence.
+- Update API UpdateOriginRule: add request parameters Sequence.
+- Update API UpdateRedirectRule: add request parameters Sequence.
+- Update API UpdateRewriteUrlRule: add request parameters Sequence.
+
+
+2025-03-20 Version: v2.23.1
+- Update API CreateOriginRule: add param RangeChunkSize.
+- Update API GetOriginRule: update response param.
+- Update API ListOriginRules: update response param.
+- Update API UpdateOriginRule: add param RangeChunkSize.
+
+
+2025-03-20 Version: v2.23.0
+- Support API GetEdgeContainerAppResourceReserve.
+- Support API PurchaseCacheReserve.
+- Support API UpdateCacheReserveSpec.
+- Support API UpdateEdgeContainerAppResourceReserve.
+- Update API CreateRoutine: update param SpecName.
+- Update API GetClientCaCertificate: update response param.
+- Update API GetClientCertificate: update response param.
+- Update API GetRoutine: update response param.
+- Update API ListClientCaCertificates: update response param.
+- Update API ListClientCertificates: update response param.
+- Update API ListScheduledPreloadJobs: update response param.
+- Update API SetClientCertificateHostnames: update response param.
+- Update API UpdateCustomScenePolicy: update param Objects.
+- Update API UploadClientCaCertificate: update param Name.
+
+
+2025-03-01 Version: v2.22.1
+- Update API CreateOriginRule: add param OriginMtls.
+- Update API CreateOriginRule: add param OriginVerify.
+- Update API CreateSiteDeliveryTask: update response param.
+- Update API GetOriginRule: update response param.
+- Update API GetWafFilter: update response param.
+- Update API ListOriginRules: update response param.
+- Update API UpdateOriginRule: add param OriginMtls.
+- Update API UpdateOriginRule: add param OriginVerify.
+
+
+2025-02-28 Version: v2.22.1
+- Update API CreateOriginRule: add param OriginMtls.
+- Update API CreateOriginRule: add param OriginVerify.
+- Update API CreateSiteDeliveryTask: update response param.
+- Update API GetOriginRule: update response param.
+- Update API GetWafFilter: update response param.
+- Update API ListOriginRules: update response param.
+- Update API UpdateOriginRule: add param OriginMtls.
+- Update API UpdateOriginRule: add param OriginVerify.
+
+
+2025-01-10 Version: v2.10.2
+- Update API ListPages: add param QueryArgs.
+- Update API ListUserRatePlanInstances: update response param.
+- Update API SetCertificate: update response param.
+
+
+2025-01-09 Version: v2.10.1
+- Generated golang 2024-09-10 for ESA.
+
+2025-01-09 Version: v2.9.1
+- Generated golang 2024-09-10 for ESA.
+
+2025-01-06 Version: v2.9.0
+- Support API DescribeDDoSBpsList.
+- Support API DescribeDDoSL7QpsList.
+
+
+2024-12-27 Version: v2.8.0
+- Support API ApplyCertificate.
+- Support API CreateOriginPool.
+- Support API DeleteOriginPool.
+- Support API GetCertificate.
+- Support API GetOriginPool.
+- Support API ListCertificates.
+- Support API ListOriginPools.
+- Support API UpdateOriginPool.
+- Update API CreateUserDeliveryTask: add param Details.
+- Update API GetOriginProtection: update param SiteId.
+- Update API GetUserDeliveryTask: update response param.
+- Update API UpdatePage: update param Description.
+- Update API UpdateUserDeliveryTask: add param Details.
+
+
+2024-12-24 Version: v2.7.5
+- Update API GetOriginProtection: update param SiteId.
+
+
+2024-12-20 Version: v2.7.4
+- Generated golang 2024-09-10 for ESA.
+
+2024-12-19 Version: v2.7.3
+- Update API GetSiteWafSettings: add param Path.
+
+
+2024-12-07 Version: v2.7.2
+- Update API PurgeCaches: update param SiteId.
+- Update API PurgeCaches: update param Type.
+
+
+2024-12-05 Version: v2.7.1
+- Update API CommitRoutineStagingCode: update param Name.
+- Update API CreateRoutine: update param Description.
+- Update API CreateRoutine: update param Name.
+- Update API CreateRoutine: update param SpecName.
+- Update API CreateRoutineRelatedRecord: update param Name.
+- Update API CreateRoutineRelatedRecord: update param RecordName.
+- Update API CreateRoutineRelatedRecord: update param SiteId.
+- Update API CreateRoutineRelatedRoute: add param ByPass.
+- Update API CreateRoutineRelatedRoute: update param Name.
+- Update API CreateRoutineRelatedRoute: update param Route.
+- Update API CreateRoutineRelatedRoute: update param SiteId.
+- Update API DeleteRoutine: update param Name.
+- Update API DeleteRoutineCodeVersion: update param CodeVersion.
+- Update API DeleteRoutineCodeVersion: update param Name.
+- Update API DeleteRoutineRelatedRecord: update param Name.
+- Update API DeleteRoutineRelatedRecord: update param RecordId.
+- Update API DeleteRoutineRelatedRecord: update param RecordName.
+- Update API DeleteRoutineRelatedRecord: update param SiteId.
+- Update API DeleteRoutineRelatedRoute: update param Name.
+- Update API DeleteRoutineRelatedRoute: update param Route.
+- Update API DeleteRoutineRelatedRoute: update param RouteId.
+- Update API DeleteRoutineRelatedRoute: update param SiteId.
+- Update API GetRoutine: update param Name.
+- Update API GetRoutine: update response param.
+- Update API GetRoutineStagingCodeUploadInfo: update param Name.
+- Update API PublishRoutineCodeVersion: update param Env.
+- Update API PublishRoutineCodeVersion: update param Name.
+
+
+2024-12-02 Version: v2.7.0
+- Support API GetClientCertificateHostnames.
+- Support API SetClientCertificateHostnames.
+
+
+2024-11-29 Version: v2.6.0
+- Support API CreateClientCertificate.
+- Support API DeleteCertificate.
+- Support API DeleteClientCaCertificate.
+- Support API DeleteClientCertificate.
+- Support API GetCertificateQuota.
+- Support API GetClientCaCertificate.
+- Support API GetClientCertificate.
+- Support API ListCiphers.
+- Support API ListClientCaCertificates.
+- Support API RevokeClientCertificate.
+- Support API UploadClientCaCertificate.
+- Update API ListSites: add param OrderBy.
+- Update API ListSites: update response param.
+- Update API ListUserRatePlanInstances: add param RemainingExpireDays.
+
+
+2024-11-22 Version: v2.5.0
+- Support API CreateOriginProtection.
+- Support API CreateSiteFunction.
+- Support API DeleteOriginProtection.
+- Support API DeleteSiteFunction.
+- Support API GetOriginProtection.
+- Support API ListSiteFunctions.
+- Support API UpdateOriginProtection.
+- Support API UpdateOriginProtectionIpWhiteList.
+- Support API UpdateSiteFunction.
+
+
+2024-11-20 Version: v2.4.5
+- Update API DescribeDDoSAllEventList: update response param.
+
+
+2024-11-19 Version: v2.4.4
+- Update API ListRecords: update param Proxied.
+
+
+2024-11-13 Version: v2.4.3
+- Update API BatchCreateRecords: update param RecordList.
+- Update API CreateScheduledPreloadExecutions: update param Executions.
+- Update API GetEdgeContainerAppVersion: update response param.
+- Update API ListEdgeContainerAppVersions: update response param.
+- Update API ListUserRatePlanInstances: update response param.
+- Update API ListWafManagedRules: add param ProtectionLevel.
+- Update API ListWafManagedRules: update param QueryArgs.
+- Update API ListWafTemplateRules: add param SiteId.
+
+
+2024-11-08 Version: v2.4.2
+- Generated golang 2024-09-10 for ESA.
+
+2024-11-06 Version: v2.4.1
+- Generated golang 2024-09-10 for ESA.
+
+2024-10-28 Version: v2.4.0
+- Support API CreateEdgeContainerApp.
+- Support API CreateEdgeContainerAppRecord.
+- Support API CreateEdgeContainerAppVersion.
+- Support API DeleteEdgeContainerApp.
+- Support API DeleteEdgeContainerAppRecord.
+- Support API DeleteEdgeContainerAppVersion.
+- Support API GetEdgeContainerApp.
+- Support API GetEdgeContainerAppStatus.
+- Support API GetEdgeContainerAppVersion.
+- Support API GetEdgeContainerDeployRegions.
+- Support API GetEdgeContainerLogs.
+- Support API GetEdgeContainerStagingDeployStatus.
+- Support API GetEdgeContainerTerminal.
+- Support API ListEdgeContainerAppVersions.
+- Support API PublishEdgeContainerAppVersion.
+- Support API RebuildEdgeContainerAppStagingEnv.
+- Support API RollbackEdgeContainerAppVersion.
+
+
+2024-10-18 Version: v2.3.1
+- Update API CreateSiteDeliveryTask: update param DiscardRate.
+- Update API CreateSiteDeliveryTask: update param SiteId.
+
+
+2024-10-16 Version: v2.3.0
+- Support API CommitRoutineStagingCode.
+- Support API CreateRoutine.
+- Support API CreateRoutineRelatedRecord.
+- Support API CreateRoutineRelatedRoute.
+- Support API DeleteRoutine.
+- Support API DeleteRoutineCodeVersion.
+- Support API DeleteRoutineRelatedRecord.
+- Support API DeleteRoutineRelatedRoute.
+- Support API GetErService.
+- Support API GetRoutine.
+- Support API GetRoutineStagingCodeUploadInfo.
+- Support API GetRoutineStagingEnvIp.
+- Support API GetRoutineUserInfo.
+- Support API ListRoutineCanaryAreas.
+- Support API ListRoutineOptionalSpecs.
+- Support API PublishRoutineCodeVersion.
+
+
+2024-10-12 Version: v2.2.0
+- Support API ListClientCertificates.
+
+
+2024-10-11 Version: v2.1.0
+- Support API DeleteKv.
+- Support API DeleteKvNamespace.
+- Support API DescribeKvAccountStatus.
+- Support API GetKv.
+- Support API GetKvAccount.
+
+
+2024-10-11 Version: v2.0.1
+- Update API CreateRecord: update param HostPolicy.
+- Update API UpdateRecord: update param HostPolicy.
+
+
+2024-10-10 Version: v2.0.0
+- Support API GetCacheReserveSpecification.
+- Support API ListCacheReserveInstances.
+- Support API ListEdgeContainerApps.
+- Support API ListEdgeRoutinePlans.
+- Support API ListInstanceQuotas.
+- Support API ListInstanceQuotasWithUsage.
+- Support API ListUserRatePlanInstances.
+- Support API ListWafManagedRules.
+- Delete API AddUserBusinessForm.
+- Delete API AdvancePurgeObjectCache.
+- Delete API PutKvAccount.
+- Update API SetCertificate: update param SiteId.
+
+
+2024-10-08 Version: v1.0.0
+- Generated golang 2024-09-10 for ESA.
+
