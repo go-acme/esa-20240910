@@ -13568,7 +13568,7 @@ func GetOriginProtection(client *Client, request *GetOriginProtectionRequest) (_
 
 // Summary:
 //
-// # Query a Single Origin Rule Configuration
+// Queries the configurations of a single origin rule.
 //
 // @param request - GetOriginRuleRequest
 //
@@ -13608,7 +13608,7 @@ func GetOriginRuleWithOptions(client *Client, request *GetOriginRuleRequest, run
 
 // Summary:
 //
-// # Query a Single Origin Rule Configuration
+// Queries the configurations of a single origin rule.
 //
 // @param request - GetOriginRuleRequest
 //
