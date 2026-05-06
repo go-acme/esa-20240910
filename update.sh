@@ -70,7 +70,7 @@ git rm -f -r --ignore-unmatch '*'
 cp -r ${SRC_DIR}/. .
 
 ## Change module name
-go mod edit -module github.com/${DEST_ORG}/${DEST_REPO_NAME}/v2
+go mod edit -module github.com/${DEST_ORG}/${DEST_REPO_NAME}/v3
 
 ## Convert the code
 sed -E '
@@ -135,6 +135,6 @@ rm -rf ${DEST_DIR}
 #
 # cd /home/ldez/sources/go-acme/lego
 #
-# go mod edit -dropreplace github.com/alibabacloud-go/esa-20240910/v2
-# go mod edit -replace github.com/alibabacloud-go/esa-20240910/v2=${DEST_DIR}
+# go mod edit -dropreplace github.com/alibabacloud-go/esa-20240910/v3
+# go mod edit -replace github.com/alibabacloud-go/esa-20240910/v3=${DEST_DIR}
 # go mod tidy
