@@ -1,3 +1,20 @@
+2026-07-15 Version: v3.7.0
+- Support API AddUserBusinessForm.
+- Support API CheckSiteFeaturesMatchPlan.
+
+
+2026-07-07 Version: v3.6.0
+- Support API DescribeSiteWafTimeSeriesData.
+- Support API DescribeSiteWafTopData.
+- Support API DescribeWafUsageData.
+- Support API PurchaseBotInstance.
+
+
+2026-06-29 Version: v3.5.0
+- Support API DescribeDDoSOverseasAttackCount.
+- Support API GetDcvDelegation.
+
+
 2026-06-23 Version: v3.4.0
 - Support API DescribeDDoSBpsMax.
 - Support API DescribeDDoSEventMax.
