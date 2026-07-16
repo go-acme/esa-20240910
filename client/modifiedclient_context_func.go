@@ -1157,6 +1157,54 @@ func CheckUserProjectNameWithContext(ctx context.Context, client *Client, reques
 
 // Summary:
 //
+// Clones a new site version based on a specified site version.
+//
+// @param request - CloneVersionRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return CloneVersionResponse
+func CloneVersionWithContext(ctx context.Context, client *Client, request *CloneVersionRequest, runtime *dara.RuntimeOptions) (_result *CloneVersionResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	if !dara.IsNil(request.SiteVersion) {
+		query["SiteVersion"] = request.SiteVersion
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("CloneVersion"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &CloneVersionResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
 // Submits the staging (unstable) code of an Edge Routine and generates a production version.
 //
 // Prerequisite: Before calling this API operation, call GetRoutineStagingCodeUploadInfo to obtain OSS upload credentials. Upload the code file through OSS POST. After the upload callback succeeds, call this API operation to submit the code.
@@ -1719,7 +1767,9 @@ func CreateCustomScenePolicyWithContext(ctx context.Context, client *Client, req
 
 // Summary:
 //
-// Creates a containerized application. You can deploy and release a version of the application across points of presence (POPs).
+// Creates an application for edge containers. You can deploy and publish application versions to containerize edge services.
+//
+// Note: You must activate the EdgeContainer service in the console before calling this operation. Calls from accounts that have not activated the service will return a service activation error.
 //
 // @param request - CreateEdgeContainerAppRequest
 //
@@ -1923,7 +1973,15 @@ func CreateEdgeContainerAppRecordWithContext(ctx context.Context, client *Client
 
 // Summary:
 //
-// Creates a version for a containerized application. You can iterate the application based on the version.
+// Creates an edge container application version. You can iteratively publish applications by version.
+//
+// Note:
+//
+// 1) Your account must have an ESA plan with the Edge Container feature enabled.
+//
+// 2) Call CreateEdgeContainerApp first to create an application and obtain the AppId.
+//
+// 3) Complete call chain example: CreateEdgeContainerApp → ListEdgeContainerApps → CreateEdgeContainerAppVersion.
 //
 // @param tmpReq - CreateEdgeContainerAppVersionRequest
 //
@@ -1975,6 +2033,62 @@ func CreateEdgeContainerAppVersionWithContext(ctx context.Context, client *Clien
 		BodyType:    dara.String("json"),
 	}
 	_result = &CreateEdgeContainerAppVersionResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Creates a site environment.
+//
+// @param request - CreateEnvironmentRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return CreateEnvironmentResponse
+func CreateEnvironmentWithContext(ctx context.Context, client *Client, request *CreateEnvironmentRequest, runtime *dara.RuntimeOptions) (_result *CreateEnvironmentResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.EnvironmentName) {
+		query["EnvironmentName"] = request.EnvironmentName
+	}
+
+	if !dara.IsNil(request.NextEnvironmentName) {
+		query["NextEnvironmentName"] = request.NextEnvironmentName
+	}
+
+	if !dara.IsNil(request.Rule) {
+		query["Rule"] = request.Rule
+	}
+
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("CreateEnvironment"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &CreateEnvironmentResponse{}
 	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
 	if _err != nil {
 		return _result, _err
@@ -5549,7 +5663,13 @@ func DeleteEdgeContainerAppImageSecretWithContext(ctx context.Context, client *C
 
 // Summary:
 //
-// Disassociates a domain name from a containerized application. After the dissociation, you can no longer use the domain name to access the containerized application.
+// Deletes an associated domain name from an edge container application. After deletion, the edge container service can no longer be accessed through this domain name.
+//
+// Note: 1) Call CreateEdgeContainerApp first to create an edge container application and record the returned AppId.
+//
+// 2) Call CreateEdgeContainerAppRecord first to bindomain name record (RecordName) to the application.
+//
+// 3) Provide a complete three-step call example: create → bindomain → delete.
 //
 // @param request - DeleteEdgeContainerAppRecordRequest
 //
@@ -5639,6 +5759,54 @@ func DeleteEdgeContainerAppVersionWithContext(ctx context.Context, client *Clien
 		BodyType:    dara.String("json"),
 	}
 	_result = &DeleteEdgeContainerAppVersionResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Deletes a site environment. The default environment cannot be deleted.
+//
+// @param request - DeleteEnvironmentRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return DeleteEnvironmentResponse
+func DeleteEnvironmentWithContext(ctx context.Context, client *Client, request *DeleteEnvironmentRequest, runtime *dara.RuntimeOptions) (_result *DeleteEnvironmentResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.EnvironmentName) {
+		query["EnvironmentName"] = request.EnvironmentName
+	}
+
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("DeleteEnvironment"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &DeleteEnvironmentResponse{}
 	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
 	if _err != nil {
 		return _result, _err
@@ -7349,6 +7517,54 @@ func DeleteUserWafRulesetWithContext(ctx context.Context, client *Client, reques
 
 // Summary:
 //
+// Deletes a version of a site. Version 0 cannot be deleted.
+//
+// @param request - DeleteVersionRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return DeleteVersionResponse
+func DeleteVersionWithContext(ctx context.Context, client *Client, request *DeleteVersionRequest, runtime *dara.RuntimeOptions) (_result *DeleteVersionResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	if !dara.IsNil(request.SiteVersion) {
+		query["SiteVersion"] = request.SiteVersion
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("DeleteVersion"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &DeleteVersionResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
 // Deletes a video processing configuration.
 //
 // @param request - DeleteVideoProcessingRequest
@@ -7783,6 +7999,46 @@ func DescribeCacheReservePriceGapWithContext(ctx context.Context, client *Client
 		BodyType:    dara.String("json"),
 	}
 	_result = &DescribeCacheReservePriceGapResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Queries the region information supported by the rules engine, including information in three dimensions: country, region, and ISP.
+//
+// @param request - DescribeConditionIPBInfoRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return DescribeConditionIPBInfoResponse
+func DescribeConditionIPBInfoWithContext(ctx context.Context, client *Client, request *DescribeConditionIPBInfoRequest, runtime *dara.RuntimeOptions) (_result *DescribeConditionIPBInfoResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := openapiutil.Query(dara.ToMap(request))
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("DescribeConditionIPBInfo"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("GET"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &DescribeConditionIPBInfoResponse{}
 	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
 	if _err != nil {
 		return _result, _err
@@ -8717,6 +8973,46 @@ func DescribeRatePlanPriceGapWithContext(ctx context.Context, client *Client, re
 
 // Summary:
 //
+// Retrieves metadata related to the rules engine.
+//
+// @param request - DescribeRuleMetadataRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return DescribeRuleMetadataResponse
+func DescribeRuleMetadataWithContext(ctx context.Context, client *Client, request *DescribeRuleMetadataRequest, runtime *dara.RuntimeOptions) (_result *DescribeRuleMetadataResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := openapiutil.Query(dara.ToMap(request))
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("DescribeRuleMetadata"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("GET"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &DescribeRuleMetadataResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
 // Queries the URLs from which you can download the raw access logs of a website.
 //
 // Description:
@@ -9445,6 +9741,46 @@ func EnableCustomScenePolicyWithContext(ctx context.Context, client *Client, req
 
 // Summary:
 //
+// Exports the CNAME values of all records under the current site. When the site access mode is switched to CNAME access, you can call this operation to retrieve pre-configured CNAME values to prevent service interruptions.
+//
+// @param request - ExportRecordCnamesRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return ExportRecordCnamesResponse
+func ExportRecordCnamesWithContext(ctx context.Context, client *Client, request *ExportRecordCnamesRequest, runtime *dara.RuntimeOptions) (_result *ExportRecordCnamesResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := openapiutil.Query(dara.ToMap(request))
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("ExportRecordCnames"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("GET"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &ExportRecordCnamesResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
 // Exports all DNS records of a website domain as a TXT file.
 //
 // @param request - ExportRecordsRequest
@@ -9619,6 +9955,46 @@ func GetAutomaticFrequencyControlConfigWithContext(ctx context.Context, client *
 		BodyType:    dara.String("json"),
 	}
 	_result = &GetAutomaticFrequencyControlConfigResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Queries the cache reserve configuration of a site.
+//
+// @param request - GetCacheReserveRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return GetCacheReserveResponse
+func GetCacheReserveWithContext(ctx context.Context, client *Client, request *GetCacheReserveRequest, runtime *dara.RuntimeOptions) (_result *GetCacheReserveResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := openapiutil.Query(dara.ToMap(request))
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("GetCacheReserve"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("GET"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &GetCacheReserveResponse{}
 	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
 	if _err != nil {
 		return _result, _err
@@ -11433,6 +11809,46 @@ func GetLoadBalancerWithContext(ctx context.Context, client *Client, request *Ge
 
 // Summary:
 //
+// Queries the root domain name of a website.
+//
+// @param request - GetMainDomainNameRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return GetMainDomainNameResponse
+func GetMainDomainNameWithContext(ctx context.Context, client *Client, request *GetMainDomainNameRequest, runtime *dara.RuntimeOptions) (_result *GetMainDomainNameResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := openapiutil.Query(dara.ToMap(request))
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("GetMainDomainName"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("GET"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &GetMainDomainNameResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
 // Retrieves the managed transform configuration for a site.
 //
 // @param request - GetManagedTransformRequest
@@ -11463,6 +11879,50 @@ func GetManagedTransformWithContext(ctx context.Context, client *Client, request
 		BodyType:    dara.String("json"),
 	}
 	_result = &GetManagedTransformResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Retrieves the information of the longest-matching active site for a given record name under the current user. For example, if the input record name is www.test.example.com and the user has two active sites (test.example.com and example.com), the API returns the longest-matching active site test.example.com. If no matching active site is found, an error is returned.
+//
+// Description:
+//
+// Used with the Edge Routine (ER) feature to automatically match an active site.
+//
+// @param request - GetMatchSiteRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return GetMatchSiteResponse
+func GetMatchSiteWithContext(ctx context.Context, client *Client, request *GetMatchSiteRequest, runtime *dara.RuntimeOptions) (_result *GetMatchSiteResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := openapiutil.Query(dara.ToMap(request))
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("GetMatchSite"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("GET"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &GetMatchSiteResponse{}
 	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
 	if _err != nil {
 		return _result, _err
@@ -11787,6 +12247,54 @@ func GetPageWithContext(ctx context.Context, client *Client, request *GetPageReq
 		BodyType:    dara.String("json"),
 	}
 	_result = &GetPageResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Queries the page protection configuration of a site.
+//
+// @param request - GetPageShieldRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return GetPageShieldResponse
+func GetPageShieldWithContext(ctx context.Context, client *Client, request *GetPageShieldRequest, runtime *dara.RuntimeOptions) (_result *GetPageShieldResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	if !dara.IsNil(request.SiteVersion) {
+		query["SiteVersion"] = request.SiteVersion
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("GetPageShield"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &GetPageShieldResponse{}
 	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
 	if _err != nil {
 		return _result, _err
@@ -12769,6 +13277,46 @@ func GetSitePauseWithContext(ctx context.Context, client *Client, request *GetSi
 
 // Summary:
 //
+// Queries the traffic sequences and their details for the current site.
+//
+// @param request - GetSiteTrafficSequenceRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return GetSiteTrafficSequenceResponse
+func GetSiteTrafficSequenceWithContext(ctx context.Context, client *Client, request *GetSiteTrafficSequenceRequest, runtime *dara.RuntimeOptions) (_result *GetSiteTrafficSequenceResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := openapiutil.Query(dara.ToMap(request))
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("GetSiteTrafficSequence"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("GET"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &GetSiteTrafficSequenceResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
 // # Get WAF Configuration for a Site
 //
 // @param request - GetSiteWafSettingsRequest
@@ -13323,6 +13871,126 @@ func GetWafRulesetWithContext(ctx context.Context, client *Client, request *GetW
 		BodyType:    dara.String("json"),
 	}
 	_result = &GetWafRulesetResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Queries the preview page URL of a waiting room.
+//
+// @param request - GetWaitingRoomPreviewPageRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return GetWaitingRoomPreviewPageResponse
+func GetWaitingRoomPreviewPageWithContext(ctx context.Context, client *Client, request *GetWaitingRoomPreviewPageRequest, runtime *dara.RuntimeOptions) (_result *GetWaitingRoomPreviewPageResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := openapiutil.Query(dara.ToMap(request))
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("GetWaitingRoomPreviewPage"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("GET"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &GetWaitingRoomPreviewPageResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Queries the list of regions supported by AWS S3.
+//
+// @param request - ListAWSRegionInfosRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return ListAWSRegionInfosResponse
+func ListAWSRegionInfosWithContext(ctx context.Context, client *Client, request *ListAWSRegionInfosRequest, runtime *dara.RuntimeOptions) (_result *ListAWSRegionInfosResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := openapiutil.Query(dara.ToMap(request))
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("ListAWSRegionInfos"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("GET"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &ListAWSRegionInfosResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// 查询异步任务列表
+//
+// @param request - ListAsyncTasksRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return ListAsyncTasksResponse
+func ListAsyncTasksWithContext(ctx context.Context, client *Client, request *ListAsyncTasksRequest, runtime *dara.RuntimeOptions) (_result *ListAsyncTasksResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := openapiutil.Query(dara.ToMap(request))
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("ListAsyncTasks"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("GET"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &ListAsyncTasksResponse{}
 	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
 	if _err != nil {
 		return _result, _err
@@ -14255,6 +14923,46 @@ func ListEdgeRoutineRecordsWithContext(ctx context.Context, client *Client, requ
 		BodyType:    dara.String("json"),
 	}
 	_result = &ListEdgeRoutineRecordsResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Queries the list of environments for a site.
+//
+// @param request - ListEnvironmentsRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return ListEnvironmentsResponse
+func ListEnvironmentsWithContext(ctx context.Context, client *Client, request *ListEnvironmentsRequest, runtime *dara.RuntimeOptions) (_result *ListEnvironmentsResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := openapiutil.Query(dara.ToMap(request))
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("ListEnvironments"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("GET"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &ListEnvironmentsResponse{}
 	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
 	if _err != nil {
 		return _result, _err
@@ -15261,6 +15969,47 @@ func ListPostpaidRatePlanInstancesWithContext(ctx context.Context, client *Clien
 
 // Summary:
 //
+// Queries the list of pay-as-you-go site plans available for purchase by a user.
+//
+// Description:
+//
+// By specifying the AliUid of a user and the service region (China site or international site), the API returns all pay-as-you-go site plans applicable to the user, including plan names, billing methods, and pricing information.
+//
+// @param request - ListPostpaidSitePlansRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return ListPostpaidSitePlansResponse
+func ListPostpaidSitePlansWithContext(ctx context.Context, client *Client, request *ListPostpaidSitePlansRequest, runtime *dara.RuntimeOptions) (_result *ListPostpaidSitePlansResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	req := &openapiutil.OpenApiRequest{}
+	params := &openapiutil.Params{
+		Action:      dara.String("ListPostpaidSitePlans"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("GET"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &ListPostpaidSitePlansResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
 // Queries the list of DNS records under a site, including record values, priorities, authentication configurations, etc. Supports filtering by conditions such as record name and record type.
 //
 // Description:
@@ -15669,6 +16418,46 @@ func ListSiteDeliveryTasksWithContext(ctx context.Context, client *Client, reque
 		BodyType:    dara.String("json"),
 	}
 	_result = &ListSiteDeliveryTasksResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Queries the feature configurations of a site. You can query all feature configurations of a site or specify FunctionName to query a specific feature configuration.
+//
+// @param request - ListSiteFunctionsRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return ListSiteFunctionsResponse
+func ListSiteFunctionsWithContext(ctx context.Context, client *Client, request *ListSiteFunctionsRequest, runtime *dara.RuntimeOptions) (_result *ListSiteFunctionsResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := openapiutil.Query(dara.ToMap(request))
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("ListSiteFunctions"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("GET"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &ListSiteFunctionsResponse{}
 	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
 	if _err != nil {
 		return _result, _err
@@ -16315,6 +17104,46 @@ func ListUserWafRulesetsWithContext(ctx context.Context, client *Client, tmpReq 
 		BodyType:    dara.String("json"),
 	}
 	_result = &ListUserWafRulesetsResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Queries the version list of a site.
+//
+// @param request - ListVersionsRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return ListVersionsResponse
+func ListVersionsWithContext(ctx context.Context, client *Client, request *ListVersionsRequest, runtime *dara.RuntimeOptions) (_result *ListVersionsResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := openapiutil.Query(dara.ToMap(request))
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("ListVersions"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("GET"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &ListVersionsResponse{}
 	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
 	if _err != nil {
 		return _result, _err
@@ -17713,6 +18542,50 @@ func RebuildEdgeContainerAppStagingEnvWithContext(ctx context.Context, client *C
 
 // Summary:
 //
+// Restores the status of a site that has been disabled.
+//
+// @param request - RecoverSiteRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return RecoverSiteResponse
+func RecoverSiteWithContext(ctx context.Context, client *Client, request *RecoverSiteRequest, runtime *dara.RuntimeOptions) (_result *RecoverSiteResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("RecoverSite"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &RecoverSiteResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
 // Schedules the release of a security instance.
 //
 // @param request - ReleaseInstanceRequest
@@ -17895,6 +18768,54 @@ func RollbackEdgeContainerAppVersionWithContext(ctx context.Context, client *Cli
 		BodyType:    dara.String("json"),
 	}
 	_result = &RollbackEdgeContainerAppVersionResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Rolls back the deployment version of an environment.
+//
+// @param request - RollbackEnvironmentVersionRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return RollbackEnvironmentVersionResponse
+func RollbackEnvironmentVersionWithContext(ctx context.Context, client *Client, request *RollbackEnvironmentVersionRequest, runtime *dara.RuntimeOptions) (_result *RollbackEnvironmentVersionResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.EnvironmentName) {
+		query["EnvironmentName"] = request.EnvironmentName
+	}
+
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("RollbackEnvironmentVersion"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &RollbackEnvironmentVersionResponse{}
 	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
 	if _err != nil {
 		return _result, _err
@@ -18645,6 +19566,50 @@ func StopScheduledPreloadExecutionWithContext(ctx context.Context, client *Clien
 
 // Summary:
 //
+// Manually deactivates a site.
+//
+// @param request - StopSiteRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return StopSiteResponse
+func StopSiteWithContext(ctx context.Context, client *Client, request *StopSiteRequest, runtime *dara.RuntimeOptions) (_result *StopSiteResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("StopSite"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &StopSiteResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
 // Submits a purge or prefetch task after a file that contains resources to be purged or prefetched is uploaded.
 //
 // @param request - SubmitUploadTaskRequest
@@ -18803,6 +19768,58 @@ func UntagResourcesWithContext(ctx context.Context, client *Client, request *Unt
 		BodyType:    dara.String("json"),
 	}
 	_result = &UntagResourcesResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Modifies the cache reserve configuration of a site.
+//
+// @param request - UpdateCacheReserveRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return UpdateCacheReserveResponse
+func UpdateCacheReserveWithContext(ctx context.Context, client *Client, request *UpdateCacheReserveRequest, runtime *dara.RuntimeOptions) (_result *UpdateCacheReserveResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.CacheReserveInstanceId) {
+		query["CacheReserveInstanceId"] = request.CacheReserveInstanceId
+	}
+
+	if !dara.IsNil(request.Enable) {
+		query["Enable"] = request.Enable
+	}
+
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("UpdateCacheReserve"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &UpdateCacheReserveResponse{}
 	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
 	if _err != nil {
 		return _result, _err
@@ -19195,6 +20212,62 @@ func UpdateCompressionRuleWithContext(ctx context.Context, client *Client, reque
 		BodyType:    dara.String("json"),
 	}
 	_result = &UpdateCompressionRuleResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Modifies the priority of a single rule configuration.
+//
+// Description:
+//
+// You can only modify the priority of a rule configuration. You cannot modify global configurations.
+//
+// @param request - UpdateConfigSequenceRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return UpdateConfigSequenceResponse
+func UpdateConfigSequenceWithContext(ctx context.Context, client *Client, request *UpdateConfigSequenceRequest, runtime *dara.RuntimeOptions) (_result *UpdateConfigSequenceResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.ConfigId) {
+		query["ConfigId"] = request.ConfigId
+	}
+
+	if !dara.IsNil(request.Sequence) {
+		query["Sequence"] = request.Sequence
+	}
+
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("UpdateConfigSequence"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &UpdateConfigSequenceResponse{}
 	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
 	if _err != nil {
 		return _result, _err
@@ -19625,6 +20698,122 @@ func UpdateEdgeContainerAppResourceReserveWithContext(ctx context.Context, clien
 		BodyType:    dara.String("json"),
 	}
 	_result = &UpdateEdgeContainerAppResourceReserveResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Updates an environment.
+//
+// @param request - UpdateEnvironmentRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return UpdateEnvironmentResponse
+func UpdateEnvironmentWithContext(ctx context.Context, client *Client, request *UpdateEnvironmentRequest, runtime *dara.RuntimeOptions) (_result *UpdateEnvironmentResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.EnvironmentName) {
+		query["EnvironmentName"] = request.EnvironmentName
+	}
+
+	if !dara.IsNil(request.NewName) {
+		query["NewName"] = request.NewName
+	}
+
+	if !dara.IsNil(request.ReadOnly) {
+		query["ReadOnly"] = request.ReadOnly
+	}
+
+	if !dara.IsNil(request.Rule) {
+		query["Rule"] = request.Rule
+	}
+
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	if !dara.IsNil(request.SiteVersion) {
+		query["SiteVersion"] = request.SiteVersion
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("UpdateEnvironment"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &UpdateEnvironmentResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Modifies the deployment version of an environment.
+//
+// @param request - UpdateEnvironmentVersionRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return UpdateEnvironmentVersionResponse
+func UpdateEnvironmentVersionWithContext(ctx context.Context, client *Client, request *UpdateEnvironmentVersionRequest, runtime *dara.RuntimeOptions) (_result *UpdateEnvironmentVersionResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.EnvironmentName) {
+		query["EnvironmentName"] = request.EnvironmentName
+	}
+
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	if !dara.IsNil(request.SiteVersion) {
+		query["SiteVersion"] = request.SiteVersion
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("UpdateEnvironmentVersion"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &UpdateEnvironmentVersionResponse{}
 	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
 	if _err != nil {
 		return _result, _err
@@ -22413,6 +23602,58 @@ func UpdateUserWafRulesetWithContext(ctx context.Context, client *Client, tmpReq
 
 // Summary:
 //
+// Updates the description of a version.
+//
+// @param request - UpdateVersionDescRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return UpdateVersionDescResponse
+func UpdateVersionDescWithContext(ctx context.Context, client *Client, request *UpdateVersionDescRequest, runtime *dara.RuntimeOptions) (_result *UpdateVersionDescResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.Description) {
+		query["Description"] = request.Description
+	}
+
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	if !dara.IsNil(request.SiteVersion) {
+		query["SiteVersion"] = request.SiteVersion
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("UpdateVersionDesc"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &UpdateVersionDescResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
 // Modifies the video processing configuration of a website.
 //
 // @param request - UpdateVideoProcessingRequest
@@ -22923,6 +24164,54 @@ func UpdateWaitingRoomRuleWithContext(ctx context.Context, client *Client, reque
 		BodyType:    dara.String("json"),
 	}
 	_result = &UpdateWaitingRoomRuleResponse{}
+	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Upgrades the deployment version of an environment.
+//
+// @param request - UpgradeEnvironmentVersionRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return UpgradeEnvironmentVersionResponse
+func UpgradeEnvironmentVersionWithContext(ctx context.Context, client *Client, request *UpgradeEnvironmentVersionRequest, runtime *dara.RuntimeOptions) (_result *UpgradeEnvironmentVersionResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.EnvironmentName) {
+		query["EnvironmentName"] = request.EnvironmentName
+	}
+
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("UpgradeEnvironmentVersion"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &UpgradeEnvironmentVersionResponse{}
 	_body, _err := client.CallApiWithCtx(ctx, params, req, runtime)
 	if _err != nil {
 		return _result, _err
