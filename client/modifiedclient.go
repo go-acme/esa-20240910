@@ -5148,6 +5148,130 @@ func CreateRoutine(client *Client, request *CreateRoutineRequest) (_result *Crea
 
 // Summary:
 //
+// Creates an Edge Routine (ER) build configuration.
+//
+// @param tmpReq - CreateRoutineBuildConfigurationRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return CreateRoutineBuildConfigurationResponse
+func CreateRoutineBuildConfigurationWithOptions(client *Client, tmpReq *CreateRoutineBuildConfigurationRequest, runtime *dara.RuntimeOptions) (_result *CreateRoutineBuildConfigurationResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = tmpReq.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	request := &CreateRoutineBuildConfigurationShrinkRequest{}
+	openapiutil.Convert(tmpReq, request)
+	if !dara.IsNil(tmpReq.EnvironmentVariables) {
+		request.EnvironmentVariablesShrink = openapiutil.ArrayToStringWithSpecifiedStyle(tmpReq.EnvironmentVariables, dara.String("EnvironmentVariables"), dara.String("json"))
+	}
+
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.AssetsDirectory) {
+		query["AssetsDirectory"] = request.AssetsDirectory
+	}
+
+	if !dara.IsNil(request.BuildBranches) {
+		query["BuildBranches"] = request.BuildBranches
+	}
+
+	if !dara.IsNil(request.BuildCommand) {
+		query["BuildCommand"] = request.BuildCommand
+	}
+
+	if !dara.IsNil(request.EnvironmentVariablesShrink) {
+		query["EnvironmentVariables"] = request.EnvironmentVariablesShrink
+	}
+
+	if !dara.IsNil(request.GitAccountId) {
+		query["GitAccountId"] = request.GitAccountId
+	}
+
+	if !dara.IsNil(request.GitPlatform) {
+		query["GitPlatform"] = request.GitPlatform
+	}
+
+	if !dara.IsNil(request.InstallCommand) {
+		query["InstallCommand"] = request.InstallCommand
+	}
+
+	if !dara.IsNil(request.IsPrivate) {
+		query["IsPrivate"] = request.IsPrivate
+	}
+
+	if !dara.IsNil(request.NodeVersion) {
+		query["NodeVersion"] = request.NodeVersion
+	}
+
+	if !dara.IsNil(request.ProductionBranch) {
+		query["ProductionBranch"] = request.ProductionBranch
+	}
+
+	if !dara.IsNil(request.Repository) {
+		query["Repository"] = request.Repository
+	}
+
+	if !dara.IsNil(request.RootDirectory) {
+		query["RootDirectory"] = request.RootDirectory
+	}
+
+	if !dara.IsNil(request.RoutineEntry) {
+		query["RoutineEntry"] = request.RoutineEntry
+	}
+
+	if !dara.IsNil(request.RoutineName) {
+		query["RoutineName"] = request.RoutineName
+	}
+
+	if !dara.IsNil(request.TemplateName) {
+		query["TemplateName"] = request.TemplateName
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("CreateRoutineBuildConfiguration"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &CreateRoutineBuildConfigurationResponse{}
+	_body, _err := client.CallApi(params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Creates an Edge Routine (ER) build configuration.
+//
+// @param request - CreateRoutineBuildConfigurationRequest
+//
+// @return CreateRoutineBuildConfigurationResponse
+func CreateRoutineBuildConfiguration(client *Client, request *CreateRoutineBuildConfigurationRequest) (_result *CreateRoutineBuildConfigurationResponse, _err error) {
+	runtime := &dara.RuntimeOptions{}
+	_result = &CreateRoutineBuildConfigurationResponse{}
+	_body, _err := CreateRoutineBuildConfigurationWithOptions(client,request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Summary:
+//
 // Creates a percentage-based canary deployment for a Routine code version in a specified environment.
 //
 // Description:
@@ -5654,7 +5778,7 @@ func CreateScheduledPreloadJob(client *Client, request *CreateScheduledPreloadJo
 //
 // - Before creating a site, you must have an active plan instance.
 //
-// - If the acceleration area is set to the Chinese mainland only or global, the site domain name must have a completed Internet Content Provider (ICP) filing.
+// - If the acceleration area is set to the Chinese mainland only or global, the site domain name must have a valid Internet Content Provider (ICP) filing.
 //
 // - Each user can invoke this operation up to 100 times per hour.
 //
@@ -5685,6 +5809,10 @@ func CreateSiteWithOptions(client *Client, request *CreateSiteRequest, runtime *
 
 	if !dara.IsNil(request.ResourceGroupId) {
 		query["ResourceGroupId"] = request.ResourceGroupId
+	}
+
+	if !dara.IsNil(request.ResourceOwner) {
+		query["ResourceOwner"] = request.ResourceOwner
 	}
 
 	if !dara.IsNil(request.SiteName) {
@@ -5722,7 +5850,7 @@ func CreateSiteWithOptions(client *Client, request *CreateSiteRequest, runtime *
 //
 // - Before creating a site, you must have an active plan instance.
 //
-// - If the acceleration area is set to the Chinese mainland only or global, the site domain name must have a completed Internet Content Provider (ICP) filing.
+// - If the acceleration area is set to the Chinese mainland only or global, the site domain name must have a valid Internet Content Provider (ICP) filing.
 //
 // - Each user can invoke this operation up to 100 times per hour.
 //
@@ -5846,7 +5974,7 @@ func CreateSiteCustomLog(client *Client, request *CreateSiteCustomLogRequest) (_
 
 // Summary:
 //
-// Create a real-time log shipping task.
+// Creates a real-time log delivery task.
 //
 // @param tmpReq - CreateSiteDeliveryTaskRequest
 //
@@ -5960,7 +6088,7 @@ func CreateSiteDeliveryTaskWithOptions(client *Client, tmpReq *CreateSiteDeliver
 
 // Summary:
 //
-// Create a real-time log shipping task.
+// Creates a real-time log delivery task.
 //
 // @param request - CreateSiteDeliveryTaskRequest
 //
@@ -6197,27 +6325,27 @@ func CreateUrlObservation(client *Client, request *CreateUrlObservationRequest) 
 
 // Summary:
 //
-// Creates a custom log shipping task to SLS, HTTP, OSS, S3, or Kafka.
+// Creates a custom log delivery task for the user to destinations such as Simple Log Service (SLS), HTTP, Object Storage Service (OSS), S3, or Kafka.
 //
 // Description:
 //
-// Use this API to create a delivery task for specific log data. It supports multiple delivery destinations, including SLS, HTTP services, Alibaba Cloud OSS, S3-compatible storage, and Kafka message queues. You can set a custom task name, select log fields, specify a data center, set the discard rate, choose a delivery type, and configure delivery details for the selected type.
+// This operation allows you to create a delivery task for specific log data. Multiple delivery destinations and detailed configuration options are supported, including but not limited to SLS storage, HTTP services, Alibaba Cloud OSS, S3-compatible storage, and Kafka message queues. You can customize the task name, select log fields, specify the data center, set the discard rate, choose the delivery type, and configure the delivery details based on the selected type.
 //
-// - **Field Filtering**: Use `FieldName` to specify the log fields to deliver.
+// - **Field selection**: Use `FieldName` to specify the log fields to be delivered.
 //
-// - **Filter Rules**: Use `FilterRules` to filter log data before delivery.
+// - **Filter rules**: Use `FilterRules` to preprocess and filter log data.
 //
-// - **Supported delivery destinations**: Deliver logs to various destinations, including SLS, HTTP(S), Alibaba Cloud OSS, S3-compatible storage, and Kafka. Each method has specific configuration parameters.
+// - **Diverse delivery**: Supports SLS, HTTP(S), Alibaba Cloud OSS, S3-compatible storage, and Kafka, each with its specific configuration parameters.
 //
-// ## Notes
+// ## Usage notes
 //
-// - Ensure that your AccessKey and SecretKey have the required permissions for the delivery operation.
+// - Ensure that the authentication information (such as AccessKey and SecretKey) has sufficient permissions to perform the delivery operation.
 //
-// - If a delivery method requires encryption or authentication, configure its security parameters accordingly.
+// - When you select an encrypted or authenticated delivery method, correctly configure the related security parameters.
 //
-// - Verify that the `FilterRules` syntax is correct.
+// - Verify the syntax correctness of `FilterRules` to ensure that the filtering logic meets expectations.
 //
-// - Adjust advanced parameters, such as the number of retries and timeout, to optimize delivery efficiency and stability.
+// - Adjust advanced parameters such as retries and timeout based on actual requirements to optimize delivery efficiency and stability.
 //
 // @param tmpReq - CreateUserDeliveryTaskRequest
 //
@@ -6331,27 +6459,27 @@ func CreateUserDeliveryTaskWithOptions(client *Client, tmpReq *CreateUserDeliver
 
 // Summary:
 //
-// Creates a custom log shipping task to SLS, HTTP, OSS, S3, or Kafka.
+// Creates a custom log delivery task for the user to destinations such as Simple Log Service (SLS), HTTP, Object Storage Service (OSS), S3, or Kafka.
 //
 // Description:
 //
-// Use this API to create a delivery task for specific log data. It supports multiple delivery destinations, including SLS, HTTP services, Alibaba Cloud OSS, S3-compatible storage, and Kafka message queues. You can set a custom task name, select log fields, specify a data center, set the discard rate, choose a delivery type, and configure delivery details for the selected type.
+// This operation allows you to create a delivery task for specific log data. Multiple delivery destinations and detailed configuration options are supported, including but not limited to SLS storage, HTTP services, Alibaba Cloud OSS, S3-compatible storage, and Kafka message queues. You can customize the task name, select log fields, specify the data center, set the discard rate, choose the delivery type, and configure the delivery details based on the selected type.
 //
-// - **Field Filtering**: Use `FieldName` to specify the log fields to deliver.
+// - **Field selection**: Use `FieldName` to specify the log fields to be delivered.
 //
-// - **Filter Rules**: Use `FilterRules` to filter log data before delivery.
+// - **Filter rules**: Use `FilterRules` to preprocess and filter log data.
 //
-// - **Supported delivery destinations**: Deliver logs to various destinations, including SLS, HTTP(S), Alibaba Cloud OSS, S3-compatible storage, and Kafka. Each method has specific configuration parameters.
+// - **Diverse delivery**: Supports SLS, HTTP(S), Alibaba Cloud OSS, S3-compatible storage, and Kafka, each with its specific configuration parameters.
 //
-// ## Notes
+// ## Usage notes
 //
-// - Ensure that your AccessKey and SecretKey have the required permissions for the delivery operation.
+// - Ensure that the authentication information (such as AccessKey and SecretKey) has sufficient permissions to perform the delivery operation.
 //
-// - If a delivery method requires encryption or authentication, configure its security parameters accordingly.
+// - When you select an encrypted or authenticated delivery method, correctly configure the related security parameters.
 //
-// - Verify that the `FilterRules` syntax is correct.
+// - Verify the syntax correctness of `FilterRules` to ensure that the filtering logic meets expectations.
 //
-// - Adjust advanced parameters, such as the number of retries and timeout, to optimize delivery efficiency and stability.
+// - Adjust advanced parameters such as retries and timeout based on actual requirements to optimize delivery efficiency and stability.
 //
 // @param request - CreateUserDeliveryTaskRequest
 //
@@ -9603,6 +9731,68 @@ func DeleteRoutine(client *Client, request *DeleteRoutineRequest) (_result *Dele
 
 // Summary:
 //
+// Deletes the ER build configuration.
+//
+// @param request - DeleteRoutineBuildConfigurationRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return DeleteRoutineBuildConfigurationResponse
+func DeleteRoutineBuildConfigurationWithOptions(client *Client, request *DeleteRoutineBuildConfigurationRequest, runtime *dara.RuntimeOptions) (_result *DeleteRoutineBuildConfigurationResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.RoutineName) {
+		query["RoutineName"] = request.RoutineName
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("DeleteRoutineBuildConfiguration"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &DeleteRoutineBuildConfigurationResponse{}
+	_body, _err := client.CallApi(params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Deletes the ER build configuration.
+//
+// @param request - DeleteRoutineBuildConfigurationRequest
+//
+// @return DeleteRoutineBuildConfigurationResponse
+func DeleteRoutineBuildConfiguration(client *Client, request *DeleteRoutineBuildConfigurationRequest) (_result *DeleteRoutineBuildConfigurationResponse, _err error) {
+	runtime := &dara.RuntimeOptions{}
+	_result = &DeleteRoutineBuildConfigurationResponse{}
+	_body, _err := DeleteRoutineBuildConfigurationWithOptions(client,request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Summary:
+//
 // Deletes a code version of a routine.
 //
 // @param request - DeleteRoutineCodeVersionRequest
@@ -10001,7 +10191,7 @@ func DeleteSite(client *Client, request *DeleteSiteRequest) (_result *DeleteSite
 
 // Summary:
 //
-// Deletes a real-time log delivery task.
+// Deletes an ongoing log delivery task.
 //
 // @param request - DeleteSiteDeliveryTaskRequest
 //
@@ -10049,7 +10239,7 @@ func DeleteSiteDeliveryTaskWithOptions(client *Client, request *DeleteSiteDelive
 
 // Summary:
 //
-// Deletes a real-time log delivery task.
+// Deletes an ongoing log delivery task.
 //
 // @param request - DeleteSiteDeliveryTaskRequest
 //
@@ -10257,17 +10447,19 @@ func DeleteUrlObservation(client *Client, request *DeleteUrlObservationRequest) 
 
 // Summary:
 //
-// Deletes a log delivery task from your Alibaba Cloud account.
+// Deletes a user task delivery configuration based on the specified task name and Alibaba Cloud UID.
 //
 // Description:
 //
-// *****>
+// This operation allows you to delete an existing task delivery configuration based on the specified **task name*	- and **Alibaba Cloud UID**. Before proceeding, verify that the provided information is accurate to avoid disrupting the processing of related logs or data.
 //
-//   - Deleted tasks cannot be restored. Proceed with caution.
+// **Note:**
 //
-//   - To call this operation, you must have an account that has the required permissions.
+// - The deletion operation is irreversible. Proceed with caution.
 //
-//   - The returned `RequestId` value can be used to track the request processing progress and troubleshoot issues.
+// - Only accounts with the required permissions can call this operation.
+//
+// - You can use the returned `RequestId` to track the request progress and troubleshoot issues.
 //
 // @param request - DeleteUserDeliveryTaskRequest
 //
@@ -10311,17 +10503,19 @@ func DeleteUserDeliveryTaskWithOptions(client *Client, request *DeleteUserDelive
 
 // Summary:
 //
-// Deletes a log delivery task from your Alibaba Cloud account.
+// Deletes a user task delivery configuration based on the specified task name and Alibaba Cloud UID.
 //
 // Description:
 //
-// *****>
+// This operation allows you to delete an existing task delivery configuration based on the specified **task name*	- and **Alibaba Cloud UID**. Before proceeding, verify that the provided information is accurate to avoid disrupting the processing of related logs or data.
 //
-//   - Deleted tasks cannot be restored. Proceed with caution.
+// **Note:**
 //
-//   - To call this operation, you must have an account that has the required permissions.
+// - The deletion operation is irreversible. Proceed with caution.
 //
-//   - The returned `RequestId` value can be used to track the request processing progress and troubleshoot issues.
+// - Only accounts with the required permissions can call this operation.
+//
+// - You can use the returned `RequestId` to track the request progress and troubleshoot issues.
 //
 // @param request - DeleteUserDeliveryTaskRequest
 //
@@ -12242,11 +12436,11 @@ func DescribePurgeTasks(client *Client, request *DescribePurgeTasksRequest) (_re
 
 // Summary:
 //
-// Queries the status of an instance that uses a plan.
+// Queries the status of a plan instance.
 //
 // Description:
 //
-// You can query the status of an instance after you purchase a plan for the instance.
+// You can query the status of a plan instance only after you purchase and create the instance.
 //
 // @param request - DescribeRatePlanInstanceStatusRequest
 //
@@ -12263,6 +12457,10 @@ func DescribeRatePlanInstanceStatusWithOptions(client *Client, request *Describe
 	query := map[string]interface{}{}
 	if !dara.IsNil(request.InstanceId) {
 		query["InstanceId"] = request.InstanceId
+	}
+
+	if !dara.IsNil(request.ResourceOwner) {
+		query["ResourceOwner"] = request.ResourceOwner
 	}
 
 	req := &openapiutil.OpenApiRequest{
@@ -12290,11 +12488,11 @@ func DescribeRatePlanInstanceStatusWithOptions(client *Client, request *Describe
 
 // Summary:
 //
-// Queries the status of an instance that uses a plan.
+// Queries the status of a plan instance.
 //
 // Description:
 //
-// You can query the status of an instance after you purchase a plan for the instance.
+// You can query the status of a plan instance only after you purchase and create the instance.
 //
 // @param request - DescribeRatePlanInstanceStatusRequest
 //
@@ -13396,7 +13594,7 @@ func DisableCustomScenePolicy(client *Client, request *DisableCustomScenePolicyR
 
 // Summary:
 //
-// # Edit WAF Configuration for a Site
+// Modifies the Web Application Firewall (WAF) configuration of a site. You can call this operation to update WAF settings for a site, such as modifying the client IP address identified by WAF.
 //
 // @param tmpReq - EditSiteWafSettingsRequest
 //
@@ -13456,7 +13654,7 @@ func EditSiteWafSettingsWithOptions(client *Client, tmpReq *EditSiteWafSettingsR
 
 // Summary:
 //
-// # Edit WAF Configuration for a Site
+// Modifies the Web Application Firewall (WAF) configuration of a site. You can call this operation to update WAF settings for a site, such as modifying the client IP address identified by WAF.
 //
 // @param request - EditSiteWafSettingsRequest
 //
@@ -17788,6 +17986,130 @@ func GetRoutineAccessToken(client *Client, request *GetRoutineAccessTokenRequest
 
 // Summary:
 //
+// Queries a single ER build task.
+//
+// @param request - GetRoutineBuildRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return GetRoutineBuildResponse
+func GetRoutineBuildWithOptions(client *Client, request *GetRoutineBuildRequest, runtime *dara.RuntimeOptions) (_result *GetRoutineBuildResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.RoutineBuildId) {
+		query["RoutineBuildId"] = request.RoutineBuildId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("GetRoutineBuild"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &GetRoutineBuildResponse{}
+	_body, _err := client.CallApi(params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Queries a single ER build task.
+//
+// @param request - GetRoutineBuildRequest
+//
+// @return GetRoutineBuildResponse
+func GetRoutineBuild(client *Client, request *GetRoutineBuildRequest) (_result *GetRoutineBuildResponse, _err error) {
+	runtime := &dara.RuntimeOptions{}
+	_result = &GetRoutineBuildResponse{}
+	_body, _err := GetRoutineBuildWithOptions(client,request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Summary:
+//
+// Retrieves the build configuration.
+//
+// @param request - GetRoutineBuildConfigurationRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return GetRoutineBuildConfigurationResponse
+func GetRoutineBuildConfigurationWithOptions(client *Client, request *GetRoutineBuildConfigurationRequest, runtime *dara.RuntimeOptions) (_result *GetRoutineBuildConfigurationResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.RoutineName) {
+		query["RoutineName"] = request.RoutineName
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("GetRoutineBuildConfiguration"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &GetRoutineBuildConfigurationResponse{}
+	_body, _err := client.CallApi(params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Retrieves the build configuration.
+//
+// @param request - GetRoutineBuildConfigurationRequest
+//
+// @return GetRoutineBuildConfigurationResponse
+func GetRoutineBuildConfiguration(client *Client, request *GetRoutineBuildConfigurationRequest) (_result *GetRoutineBuildConfigurationResponse, _err error) {
+	runtime := &dara.RuntimeOptions{}
+	_result = &GetRoutineBuildConfigurationResponse{}
+	_body, _err := GetRoutineBuildConfigurationWithOptions(client,request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Summary:
+//
 // Queries the code information of a specific version of an Edge Routine.
 //
 // @param request - GetRoutineCodeVersionRequest
@@ -17998,13 +18320,13 @@ func GetRoutineRoute(client *Client, request *GetRoutineRouteRequest) (_result *
 
 // Summary:
 //
-// Obtains the release information about the routine code that is released to the staging environment. This information can be used to upload the test code to Object Storage Service (OSS).
+// Retrieves the upload information for uploading test version code of an Edge Routine to OSS.
 //
 // Description:
 //
-//	  Every time the code of a routine is released to the staging environment, a version number is generated. Such code is for tests only.
+// - Each upload of test code for an Edge Routine generates a version number, which occupies one CodeRev code version slot. This is used for testing purposes only.
 //
-//		- A routine can retain a maximum of 10 code versions. If the number of versions reaches the limit, you must call the DeleteRoutineCodeRevision operation to delete unwanted versions.
+// - An Edge Routine can retain a maximum of 10 version numbers. After the limit is exceeded, manually call DeleteRoutineCodeRevision to delete unused versions.
 //
 // @param request - GetRoutineStagingCodeUploadInfoRequest
 //
@@ -18052,13 +18374,13 @@ func GetRoutineStagingCodeUploadInfoWithOptions(client *Client, request *GetRout
 
 // Summary:
 //
-// Obtains the release information about the routine code that is released to the staging environment. This information can be used to upload the test code to Object Storage Service (OSS).
+// Retrieves the upload information for uploading test version code of an Edge Routine to OSS.
 //
 // Description:
 //
-//	  Every time the code of a routine is released to the staging environment, a version number is generated. Such code is for tests only.
+// - Each upload of test code for an Edge Routine generates a version number, which occupies one CodeRev code version slot. This is used for testing purposes only.
 //
-//		- A routine can retain a maximum of 10 code versions. If the number of versions reaches the limit, you must call the DeleteRoutineCodeRevision operation to delete unwanted versions.
+// - An Edge Routine can retain a maximum of 10 version numbers. After the limit is exceeded, manually call DeleteRoutineCodeRevision to delete unused versions.
 //
 // @param request - GetRoutineStagingCodeUploadInfoRequest
 //
@@ -18530,23 +18852,21 @@ func GetSiteDeliveryTask(client *Client, request *GetSiteDeliveryTaskRequest) (_
 
 // Summary:
 //
-// Queries the remaining quota for delivering a specific category of real-time logs in a website.
+// Queries the remaining real-time log delivery quota for a specified site and business type.
 //
 // Description:
 //
-// Use this operation to query the remaining quota for delivering a specific category of real-time logs in a website within an Alibaba Cloud account. This is essential for monitoring and managing your log delivery capacity to ensure that logs can be delivered to the destination and prevent data loss or latency caused by insufficient quota.
+// You can call this operation to query the remaining quota of the real-time log delivery service for a specific site and business type under a specified Alibaba Cloud account. This is important for monitoring and managing your log delivery capacity to ensure that logs can be smoothly pushed to the destination storage and to prevent data loss or delays caused by insufficient quota.
 //
-// **Take note of the following parameters:**
+// **Parameter notes:**
 //
-// - \\`\\`
+// - `BusinessType` is required. Specify the business type to obtain the corresponding quota information.
 //
-// - `BusinessType` is required. You must specify a log category to obtain the corresponding quota information.
-//
-// - `SiteId` specifies the ID of a website, which must be a valid integer that corresponds to a website that you configured on Alibaba Cloud.
+// - `SiteId` must be a valid site ID in integer format and must correspond to the site configured in Alibaba Cloud.
 //
 // **Response:**
 //
-// - If a request is successful, the system returns the remaining log delivery quota (`FreeQuota`), request ID (`RequestId`), website ID (`SiteId`), and log category (`BusinessType`). You can confirm and record the returned data.
+// - A successful response returns the delivery quota (`FreeQuota`), request ID (`RequestId`), site ID (`SiteId`), and business type (`BusinessType`) for confirmation and logging purposes.
 //
 // @param request - GetSiteLogDeliveryQuotaRequest
 //
@@ -18586,23 +18906,21 @@ func GetSiteLogDeliveryQuotaWithOptions(client *Client, request *GetSiteLogDeliv
 
 // Summary:
 //
-// Queries the remaining quota for delivering a specific category of real-time logs in a website.
+// Queries the remaining real-time log delivery quota for a specified site and business type.
 //
 // Description:
 //
-// Use this operation to query the remaining quota for delivering a specific category of real-time logs in a website within an Alibaba Cloud account. This is essential for monitoring and managing your log delivery capacity to ensure that logs can be delivered to the destination and prevent data loss or latency caused by insufficient quota.
+// You can call this operation to query the remaining quota of the real-time log delivery service for a specific site and business type under a specified Alibaba Cloud account. This is important for monitoring and managing your log delivery capacity to ensure that logs can be smoothly pushed to the destination storage and to prevent data loss or delays caused by insufficient quota.
 //
-// **Take note of the following parameters:**
+// **Parameter notes:**
 //
-// - \\`\\`
+// - `BusinessType` is required. Specify the business type to obtain the corresponding quota information.
 //
-// - `BusinessType` is required. You must specify a log category to obtain the corresponding quota information.
-//
-// - `SiteId` specifies the ID of a website, which must be a valid integer that corresponds to a website that you configured on Alibaba Cloud.
+// - `SiteId` must be a valid site ID in integer format and must correspond to the site configured in Alibaba Cloud.
 //
 // **Response:**
 //
-// - If a request is successful, the system returns the remaining log delivery quota (`FreeQuota`), request ID (`RequestId`), website ID (`SiteId`), and log category (`BusinessType`). You can confirm and record the returned data.
+// - A successful response returns the delivery quota (`FreeQuota`), request ID (`RequestId`), site ID (`SiteId`), and business type (`BusinessType`) for confirmation and logging purposes.
 //
 // @param request - GetSiteLogDeliveryQuotaRequest
 //
@@ -18860,7 +19178,7 @@ func GetSiteTrafficSequence(client *Client, request *GetSiteTrafficSequenceReque
 
 // Summary:
 //
-// # Get WAF Configuration for a Site
+// Retrieves the WAF configuration of a site.
 //
 // @param request - GetSiteWafSettingsRequest
 //
@@ -18912,7 +19230,7 @@ func GetSiteWafSettingsWithOptions(client *Client, request *GetSiteWafSettingsRe
 
 // Summary:
 //
-// # Get WAF Configuration for a Site
+// Retrieves the WAF configuration of a site.
 //
 // @param request - GetSiteWafSettingsRequest
 //
@@ -22768,7 +23086,7 @@ func ListOriginRules(client *Client, request *ListOriginRulesRequest) (_result *
 
 // Summary:
 //
-// Lists all custom response pages created by the user. This operation supports pagination and allows you to retrieve the response page list by specifying the page number and page size.
+// Lists all custom response pages created by the user. This operation supports pagination and allows you to retrieve the response page list based on page number and page size.
 //
 // @param tmpReq - ListPagesRequest
 //
@@ -22826,7 +23144,7 @@ func ListPagesWithOptions(client *Client, tmpReq *ListPagesRequest, runtime *dar
 
 // Summary:
 //
-// Lists all custom response pages created by the user. This operation supports pagination and allows you to retrieve the response page list by specifying the page number and page size.
+// Lists all custom response pages created by the user. This operation supports pagination and allows you to retrieve the response page list based on page number and page size.
 //
 // @param request - ListPagesRequest
 //
@@ -22848,7 +23166,7 @@ func ListPages(client *Client, request *ListPagesRequest) (_result *ListPagesRes
 //
 // Description:
 //
-// Queries the list of pay-as-you-go plan instances under your account. You can filter and sort the results by multiple conditions.
+// This operation queries the list of pay-as-you-go plan instances under your account. You can filter and sort results by multiple conditions.
 //
 // @param request - ListPostpaidRatePlanInstancesRequest
 //
@@ -22892,7 +23210,7 @@ func ListPostpaidRatePlanInstancesWithOptions(client *Client, request *ListPostp
 //
 // Description:
 //
-// Queries the list of pay-as-you-go plan instances under your account. You can filter and sort the results by multiple conditions.
+// This operation queries the list of pay-as-you-go plan instances under your account. You can filter and sort results by multiple conditions.
 //
 // @param request - ListPostpaidRatePlanInstancesRequest
 //
@@ -23204,6 +23522,150 @@ func ListRewriteUrlRules(client *Client, request *ListRewriteUrlRulesRequest) (_
 	runtime := &dara.RuntimeOptions{}
 	_result = &ListRewriteUrlRulesResponse{}
 	_body, _err := ListRewriteUrlRulesWithOptions(client,request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Summary:
+//
+// Lists the build configurations for multiple routines by name.
+//
+// @param request - ListRoutineBuildConfigurationsRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return ListRoutineBuildConfigurationsResponse
+func ListRoutineBuildConfigurationsWithOptions(client *Client, request *ListRoutineBuildConfigurationsRequest, runtime *dara.RuntimeOptions) (_result *ListRoutineBuildConfigurationsResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.RoutineNames) {
+		query["RoutineNames"] = request.RoutineNames
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("ListRoutineBuildConfigurations"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &ListRoutineBuildConfigurationsResponse{}
+	_body, _err := client.CallApi(params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Lists the build configurations for multiple routines by name.
+//
+// @param request - ListRoutineBuildConfigurationsRequest
+//
+// @return ListRoutineBuildConfigurationsResponse
+func ListRoutineBuildConfigurations(client *Client, request *ListRoutineBuildConfigurationsRequest) (_result *ListRoutineBuildConfigurationsResponse, _err error) {
+	runtime := &dara.RuntimeOptions{}
+	_result = &ListRoutineBuildConfigurationsResponse{}
+	_body, _err := ListRoutineBuildConfigurationsWithOptions(client,request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Summary:
+//
+// Retrieves the list of ER build tasks.
+//
+// @param request - ListRoutineBuildsRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return ListRoutineBuildsResponse
+func ListRoutineBuildsWithOptions(client *Client, request *ListRoutineBuildsRequest, runtime *dara.RuntimeOptions) (_result *ListRoutineBuildsResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.PageIndex) {
+		query["PageIndex"] = request.PageIndex
+	}
+
+	if !dara.IsNil(request.PageSize) {
+		query["PageSize"] = request.PageSize
+	}
+
+	if !dara.IsNil(request.RoutineName) {
+		query["RoutineName"] = request.RoutineName
+	}
+
+	if !dara.IsNil(request.SortBy) {
+		query["SortBy"] = request.SortBy
+	}
+
+	if !dara.IsNil(request.SortOrder) {
+		query["SortOrder"] = request.SortOrder
+	}
+
+	if !dara.IsNil(request.Status) {
+		query["Status"] = request.Status
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("ListRoutineBuilds"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &ListRoutineBuildsResponse{}
+	_body, _err := client.CallApi(params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Retrieves the list of ER build tasks.
+//
+// @param request - ListRoutineBuildsRequest
+//
+// @return ListRoutineBuildsResponse
+func ListRoutineBuilds(client *Client, request *ListRoutineBuildsRequest) (_result *ListRoutineBuildsResponse, _err error) {
+	runtime := &dara.RuntimeOptions{}
+	_result = &ListRoutineBuildsResponse{}
+	_body, _err := ListRoutineBuildsWithOptions(client,request, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -26128,13 +26590,87 @@ func PurchaseCacheReserve(client *Client, request *PurchaseCacheReserveRequest) 
 
 // Summary:
 //
-// Purchases a plan by calling PurchaseRatePlan.
+// 新购DDoS实例
+//
+// @param request - PurchaseDDoSInstanceRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return PurchaseDDoSInstanceResponse
+func PurchaseDDoSInstanceWithOptions(client *Client, request *PurchaseDDoSInstanceRequest, runtime *dara.RuntimeOptions) (_result *PurchaseDDoSInstanceResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.DDoSBillingMode) {
+		query["DDoSBillingMode"] = request.DDoSBillingMode
+	}
+
+	if !dara.IsNil(request.DDoSBurstableDomesticProtection) {
+		query["DDoSBurstableDomesticProtection"] = request.DDoSBurstableDomesticProtection
+	}
+
+	if !dara.IsNil(request.DDoSBurstableOverseasProtection) {
+		query["DDoSBurstableOverseasProtection"] = request.DDoSBurstableOverseasProtection
+	}
+
+	if !dara.IsNil(request.SiteInstanceId) {
+		query["SiteInstanceId"] = request.SiteInstanceId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("PurchaseDDoSInstance"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &PurchaseDDoSInstanceResponse{}
+	_body, _err := client.CallApi(params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// 新购DDoS实例
+//
+// @param request - PurchaseDDoSInstanceRequest
+//
+// @return PurchaseDDoSInstanceResponse
+func PurchaseDDoSInstance(client *Client, request *PurchaseDDoSInstanceRequest) (_result *PurchaseDDoSInstanceResponse, _err error) {
+	runtime := &dara.RuntimeOptions{}
+	_result = &PurchaseDDoSInstanceResponse{}
+	_body, _err := PurchaseDDoSInstanceWithOptions(client,request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Summary:
+//
+// Calls the PurchaseRatePlan operation to purchase a plan.
 //
 // Description:
 //
-// 1. Obtain the plan name and plan code by calling the DescribeRatePlanPrice operation.
+// 1. You can obtain the plan name and plan code by calling the DescribeRatePlanPrice operation.
 //
-// 2. If the acceleration region is not set to overseas, the site must have a valid China Internet Content Provider (ICP) filing.
+// 2. If the acceleration region is not set to overseas, the site must have a valid Internet Content Provider (ICP) filing.
 //
 // @param request - PurchaseRatePlanRequest
 //
@@ -26171,6 +26707,10 @@ func PurchaseRatePlanWithOptions(client *Client, request *PurchaseRatePlanReques
 
 	if !dara.IsNil(request.Coverage) {
 		query["Coverage"] = request.Coverage
+	}
+
+	if !dara.IsNil(request.OveragePolicy) {
+		query["OveragePolicy"] = request.OveragePolicy
 	}
 
 	if !dara.IsNil(request.Period) {
@@ -26218,13 +26758,13 @@ func PurchaseRatePlanWithOptions(client *Client, request *PurchaseRatePlanReques
 
 // Summary:
 //
-// Purchases a plan by calling PurchaseRatePlan.
+// Calls the PurchaseRatePlan operation to purchase a plan.
 //
 // Description:
 //
-// 1. Obtain the plan name and plan code by calling the DescribeRatePlanPrice operation.
+// 1. You can obtain the plan name and plan code by calling the DescribeRatePlanPrice operation.
 //
-// 2. If the acceleration region is not set to overseas, the site must have a valid China Internet Content Provider (ICP) filing.
+// 2. If the acceleration region is not set to overseas, the site must have a valid Internet Content Provider (ICP) filing.
 //
 // @param request - PurchaseRatePlanRequest
 //
@@ -26734,6 +27274,68 @@ func PutKvWithHighCapacityAdvance(client *Client, request *PutKvWithHighCapacity
 	}
 
 	_result = putKvWithHighCapacityResp
+	return _result, _err
+}
+
+// Summary:
+//
+// Retries a task replication.
+//
+// @param request - ReDoRoutineBuildRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return ReDoRoutineBuildResponse
+func ReDoRoutineBuildWithOptions(client *Client, request *ReDoRoutineBuildRequest, runtime *dara.RuntimeOptions) (_result *ReDoRoutineBuildResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.RoutineBuildId) {
+		query["RoutineBuildId"] = request.RoutineBuildId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("ReDoRoutineBuild"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &ReDoRoutineBuildResponse{}
+	_body, _err := client.CallApi(params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Retries a task replication.
+//
+// @param request - ReDoRoutineBuildRequest
+//
+// @return ReDoRoutineBuildResponse
+func ReDoRoutineBuild(client *Client, request *ReDoRoutineBuildRequest) (_result *ReDoRoutineBuildResponse, _err error) {
+	runtime := &dara.RuntimeOptions{}
+	_result = &ReDoRoutineBuildResponse{}
+	_body, _err := ReDoRoutineBuildWithOptions(client,request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
 	return _result, _err
 }
 
@@ -28096,6 +28698,68 @@ func StartScheduledPreloadExecution(client *Client, request *StartScheduledPrelo
 	runtime := &dara.RuntimeOptions{}
 	_result = &StartScheduledPreloadExecutionResponse{}
 	_body, _err := StartScheduledPreloadExecutionWithOptions(client,request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Summary:
+//
+// Stops a task.
+//
+// @param request - StopRoutineBuildRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return StopRoutineBuildResponse
+func StopRoutineBuildWithOptions(client *Client, request *StopRoutineBuildRequest, runtime *dara.RuntimeOptions) (_result *StopRoutineBuildResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.RoutineBuildId) {
+		query["RoutineBuildId"] = request.RoutineBuildId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("StopRoutineBuild"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &StopRoutineBuildResponse{}
+	_body, _err := client.CallApi(params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Stops a task.
+//
+// @param request - StopRoutineBuildRequest
+//
+// @return StopRoutineBuildResponse
+func StopRoutineBuild(client *Client, request *StopRoutineBuildRequest) (_result *StopRoutineBuildResponse, _err error) {
+	runtime := &dara.RuntimeOptions{}
+	_result = &StopRoutineBuildResponse{}
+	_body, _err := StopRoutineBuildWithOptions(client,request, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -31931,7 +32595,7 @@ func UpdateRewriteUrlRule(client *Client, request *UpdateRewriteUrlRuleRequest) 
 
 // Summary:
 //
-// Modifies the build configuration of an EdgeRoutine (ER).
+// Modifies the ER build configuration.
 //
 // @param tmpReq - UpdateRoutineBuildConfigurationRequest
 //
@@ -31970,6 +32634,10 @@ func UpdateRoutineBuildConfigurationWithOptions(client *Client, tmpReq *UpdateRo
 
 	if !dara.IsNil(request.GitAccountId) {
 		query["GitAccountId"] = request.GitAccountId
+	}
+
+	if !dara.IsNil(request.GitPlatform) {
+		query["GitPlatform"] = request.GitPlatform
 	}
 
 	if !dara.IsNil(request.InstallCommand) {
@@ -32029,7 +32697,7 @@ func UpdateRoutineBuildConfigurationWithOptions(client *Client, tmpReq *UpdateRo
 
 // Summary:
 //
-// Modifies the build configuration of an EdgeRoutine (ER).
+// Modifies the ER build configuration.
 //
 // @param request - UpdateRoutineBuildConfigurationRequest
 //
@@ -32724,6 +33392,76 @@ func UpdateSiteDeliveryTaskStatus(client *Client, request *UpdateSiteDeliveryTas
 	runtime := &dara.RuntimeOptions{}
 	_result = &UpdateSiteDeliveryTaskStatusResponse{}
 	_body, _err := UpdateSiteDeliveryTaskStatusWithOptions(client,request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Summary:
+//
+// Changes the plan instance associated with a site.
+//
+// @param request - UpdateSiteInstanceRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return UpdateSiteInstanceResponse
+func UpdateSiteInstanceWithOptions(client *Client, request *UpdateSiteInstanceRequest, runtime *dara.RuntimeOptions) (_result *UpdateSiteInstanceResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.NewInstanceId) {
+		query["NewInstanceId"] = request.NewInstanceId
+	}
+
+	if !dara.IsNil(request.ResourceOwner) {
+		query["ResourceOwner"] = request.ResourceOwner
+	}
+
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("UpdateSiteInstance"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &UpdateSiteInstanceResponse{}
+	_body, _err := client.CallApi(params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Changes the plan instance associated with a site.
+//
+// @param request - UpdateSiteInstanceRequest
+//
+// @return UpdateSiteInstanceResponse
+func UpdateSiteInstance(client *Client, request *UpdateSiteInstanceRequest) (_result *UpdateSiteInstanceResponse, _err error) {
+	runtime := &dara.RuntimeOptions{}
+	_result = &UpdateSiteInstanceResponse{}
+	_body, _err := UpdateSiteInstanceWithOptions(client,request, runtime)
 	if _err != nil {
 		return _result, _err
 	}
