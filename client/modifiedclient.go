@@ -2,6 +2,7 @@
 package client
 
 import (
+	gatewayclient "github.com/alibabacloud-go/alibabacloud-gateway-pop/client"
 	openapi "github.com/alibabacloud-go/darabonba-openapi/v2/client"
 	openapiutil "github.com/alibabacloud-go/darabonba-openapi/v2/utils"
 	"github.com/alibabacloud-go/tea/dara"
@@ -24,6 +25,13 @@ func (client *Client) Init(config *openapiutil.Config) (_err error) {
 	if _err != nil {
 		return _err
 	}
+	client.ProductId = dara.String("ESA")
+	gatewayClient, _err := gatewayclient.NewClient()
+	if _err != nil {
+		return _err
+	}
+
+	client.Spi = gatewayClient
 	client.EndpointRule = dara.String("regional")
 	_err = client.CheckConfig(config)
 	if _err != nil {
@@ -139,7 +147,7 @@ func GetEndpoint(client *Client, productId *string, regionId *string, endpointRu
 
 // Summary:
 //
-// Activates the client based on the certificate ID.
+// Activates a client based on the certificate ID.
 //
 // @param request - ActivateClientCertificateRequest
 //
@@ -179,7 +187,7 @@ func ActivateClientCertificateWithOptions(client *Client, request *ActivateClien
 
 // Summary:
 //
-// Activates the client based on the certificate ID.
+// Activates a client based on the certificate ID.
 //
 // @param request - ActivateClientCertificateRequest
 //
@@ -197,13 +205,13 @@ func ActivateClientCertificate(client *Client, request *ActivateClientCertificat
 
 // Summary:
 //
-// Enables version management. This allows a site to support multiple configuration versions and multiple deployment environments, providing more flexible management of site traffic and configuration.
+// Enables version management to allow a site to support multiple configuration versions and deployment environments for more flexible management of site traffic and configurations.
 //
 // Description:
 //
 // Prerequisites for enabling site version management:
 //
-// 1. The site plan must include the version management quota item `version_management_available`, and its value must be `true`.
+// 1. The site plan must include the version management quota item `version_management_available` with the value set to `true`.
 //
 // @param request - ActivateVersionManagementRequest
 //
@@ -247,13 +255,13 @@ func ActivateVersionManagementWithOptions(client *Client, request *ActivateVersi
 
 // Summary:
 //
-// Enables version management. This allows a site to support multiple configuration versions and multiple deployment environments, providing more flexible management of site traffic and configuration.
+// Enables version management to allow a site to support multiple configuration versions and deployment environments for more flexible management of site traffic and configurations.
 //
 // Description:
 //
 // Prerequisites for enabling site version management:
 //
-// 1. The site plan must include the version management quota item `version_management_available`, and its value must be `true`.
+// 1. The site plan must include the version management quota item `version_management_available` with the value set to `true`.
 //
 // @param request - ActivateVersionManagementRequest
 //
@@ -271,7 +279,7 @@ func ActivateVersionManagement(client *Client, request *ActivateVersionManagemen
 
 // Summary:
 //
-// Creates a user opportunity order.
+// Creates a user opportunity ticket.
 //
 // @param request - AddUserBusinessFormRequest
 //
@@ -339,7 +347,7 @@ func AddUserBusinessFormWithOptions(client *Client, request *AddUserBusinessForm
 
 // Summary:
 //
-// Creates a user opportunity order.
+// Creates a user opportunity ticket.
 //
 // @param request - AddUserBusinessFormRequest
 //
@@ -431,7 +439,7 @@ func ApplyCertificate(client *Client, request *ApplyCertificateRequest) (_result
 
 // Summary:
 //
-// Requests a new free certificate for a Software as a Service (SaaS) domain name. Call this operation only if the previous certificate request failed, or the current certificate is about to expire or has expired.
+// Reapplies for a free certificate for a SaaS domain name. This operation is supported only when the current free certificate application fails, is about to expire, or has expired.
 //
 // @param request - ApplyCustomHostnameCertificateRequest
 //
@@ -475,7 +483,7 @@ func ApplyCustomHostnameCertificateWithOptions(client *Client, request *ApplyCus
 
 // Summary:
 //
-// Requests a new free certificate for a Software as a Service (SaaS) domain name. Call this operation only if the previous certificate request failed, or the current certificate is about to expire or has expired.
+// Reapplies for a free certificate for a SaaS domain name. This operation is supported only when the current free certificate application fails, is about to expire, or has expired.
 //
 // @param request - ApplyCustomHostnameCertificateRequest
 //
@@ -493,13 +501,13 @@ func ApplyCustomHostnameCertificate(client *Client, request *ApplyCustomHostname
 
 // Summary:
 //
-// Creates multiple DNS records in a batch. Multiple record types are supported.
+// Adds DNS records in batches and supports multiple record types.
 //
 // Description:
 //
-// This API operation allows you to create or update multiple DNS records at a time. It is suitable for scenarios that require managing a large number of DNS configurations. Supported record types include but are not limited to A/AAAA, CNAME, NS, MX, TXT, CAA, SRV, and URI. Detailed configuration items are provided to meet specific requirements, such as Priority, Flag, Tag, and Weight. In addition, for specific record types such as CERT, SSHFP, SMIMEA, and TLSA, advanced settings such as certificate information and encryption algorithms are supported.
+// This API operation allows you to create or update multiple DNS record entries at a time, which is suitable for scenarios that require managing a large number of DNS configurations. Supported record types include but are not limited to A/AAAA, CNAME, NS, MX, TXT, CAA, SRV, and URI. Detailed configuration items are provided to meet specific requirements, such as priority, flag, tag, and weight. In addition, for specific record types such as CERT, SSHFP, SMIMEA, and TLSA, advanced settings such as certificate information and encryption algorithms are supported.
 //
-// Successfully and unsuccessfully processed records are listed separately in the response, so that you can identify which records are processed, which records failed, and the failure reasons.
+// Successful and failed record operations are listed separately in the response, so that you can understand which records are processed successfully and which records fail and the reasons for the failures.
 //
 // @param tmpReq - BatchCreateRecordsRequest
 //
@@ -553,13 +561,13 @@ func BatchCreateRecordsWithOptions(client *Client, tmpReq *BatchCreateRecordsReq
 
 // Summary:
 //
-// Creates multiple DNS records in a batch. Multiple record types are supported.
+// Adds DNS records in batches and supports multiple record types.
 //
 // Description:
 //
-// This API operation allows you to create or update multiple DNS records at a time. It is suitable for scenarios that require managing a large number of DNS configurations. Supported record types include but are not limited to A/AAAA, CNAME, NS, MX, TXT, CAA, SRV, and URI. Detailed configuration items are provided to meet specific requirements, such as Priority, Flag, Tag, and Weight. In addition, for specific record types such as CERT, SSHFP, SMIMEA, and TLSA, advanced settings such as certificate information and encryption algorithms are supported.
+// This API operation allows you to create or update multiple DNS record entries at a time, which is suitable for scenarios that require managing a large number of DNS configurations. Supported record types include but are not limited to A/AAAA, CNAME, NS, MX, TXT, CAA, SRV, and URI. Detailed configuration items are provided to meet specific requirements, such as priority, flag, tag, and weight. In addition, for specific record types such as CERT, SSHFP, SMIMEA, and TLSA, advanced settings such as certificate information and encryption algorithms are supported.
 //
-// Successfully and unsuccessfully processed records are listed separately in the response, so that you can identify which records are processed, which records failed, and the failure reasons.
+// Successful and failed record operations are listed separately in the response, so that you can understand which records are processed successfully and which records fail and the reasons for the failures.
 //
 // @param request - BatchCreateRecordsRequest
 //
@@ -577,7 +585,7 @@ func BatchCreateRecords(client *Client, request *BatchCreateRecordsRequest) (_re
 
 // Summary:
 //
-// Batch creates rules in a specified WAF phase. You can create multiple rules at a time and configure shared settings for these rules.
+// Creates multiple rules in a specified WAF phase in a single batch and configures shared settings for the rules.
 //
 // @param tmpReq - BatchCreateWafRulesRequest
 //
@@ -653,7 +661,7 @@ func BatchCreateWafRulesWithOptions(client *Client, tmpReq *BatchCreateWafRulesR
 
 // Summary:
 //
-// Batch creates rules in a specified WAF phase. You can create multiple rules at a time and configure shared settings for these rules.
+// Creates multiple rules in a specified WAF phase in a single batch and configures shared settings for the rules.
 //
 // @param request - BatchCreateWafRulesRequest
 //
@@ -1591,7 +1599,7 @@ func BatchPutKvWithHighCapacityAdvance(client *Client, request *BatchPutKvWithHi
 
 // Summary:
 //
-// Batch updates rules in a specified WAF ruleset. You can use this operation to update the configurations of multiple rules at a time.
+// Modifies multiple rules in a specified WAF rule set in batches. You can use this operation to update the configurations of multiple rules at the same time.
 //
 // @param tmpReq - BatchUpdateWafRulesRequest
 //
@@ -1667,7 +1675,7 @@ func BatchUpdateWafRulesWithOptions(client *Client, tmpReq *BatchUpdateWafRulesR
 
 // Summary:
 //
-// Batch updates rules in a specified WAF ruleset. You can use this operation to update the configurations of multiple rules at a time.
+// Modifies multiple rules in a specified WAF rule set in batches. You can use this operation to update the configurations of multiple rules at the same time.
 //
 // @param request - BatchUpdateWafRulesRequest
 //
@@ -1810,7 +1818,7 @@ func CheckAssumeSlrRole(client *Client, ) (_result *CheckAssumeSlrRoleResponse, 
 
 // Summary:
 //
-// Validates whether a site is compatible with the target plan during site plan migration.
+// Validates whether a site is compatible with the target plan during plan migration.
 //
 // @param request - CheckSiteFeaturesMatchPlanRequest
 //
@@ -1858,7 +1866,7 @@ func CheckSiteFeaturesMatchPlanWithOptions(client *Client, request *CheckSiteFea
 
 // Summary:
 //
-// Validates whether a site is compatible with the target plan during site plan migration.
+// Validates whether a site is compatible with the target plan during plan migration.
 //
 // @param request - CheckSiteFeaturesMatchPlanRequest
 //
@@ -1876,7 +1884,7 @@ func CheckSiteFeaturesMatchPlan(client *Client, request *CheckSiteFeaturesMatchP
 
 // Summary:
 //
-// Checks whether a specified website name is available.
+// Pre-validates whether a site name is available.
 //
 // @param request - CheckSiteNameRequest
 //
@@ -1920,7 +1928,7 @@ func CheckSiteNameWithOptions(client *Client, request *CheckSiteNameRequest, run
 
 // Summary:
 //
-// Checks whether a specified website name is available.
+// Pre-validates whether a site name is available.
 //
 // @param request - CheckSiteNameRequest
 //
@@ -1938,7 +1946,7 @@ func CheckSiteName(client *Client, request *CheckSiteNameRequest) (_result *Chec
 
 // Summary:
 //
-// Checks the project name of a real-time log delivery task.
+// Checks the project name of a real-time log task.
 //
 // @param request - CheckSiteProjectNameRequest
 //
@@ -1978,7 +1986,7 @@ func CheckSiteProjectNameWithOptions(client *Client, request *CheckSiteProjectNa
 
 // Summary:
 //
-// Checks the project name of a real-time log delivery task.
+// Checks the project name of a real-time log task.
 //
 // @param request - CheckSiteProjectNameRequest
 //
@@ -2120,9 +2128,7 @@ func CloneVersion(client *Client, request *CloneVersionRequest) (_result *CloneV
 
 // Summary:
 //
-// Submits the staging (unstable) code of an Edge Routine and generates a production version.
-//
-// Prerequisite: Before calling this API operation, call GetRoutineStagingCodeUploadInfo to obtain OSS upload credentials. Upload the code file through OSS POST. After the upload callback succeeds, call this API operation to submit the code.
+// Submits the staging code of an Edge Routine to generate a production version. Before calling this API operation, you must call GetRoutineStagingCodeUploadInfo to obtain the Object Storage Service (OSS) upload credentials, upload the code file by using an OSS POST request, and then call this API operation after the upload callback succeeds.
 //
 // @param request - CommitRoutineStagingCodeRequest
 //
@@ -2174,9 +2180,7 @@ func CommitRoutineStagingCodeWithOptions(client *Client, request *CommitRoutineS
 
 // Summary:
 //
-// Submits the staging (unstable) code of an Edge Routine and generates a production version.
-//
-// Prerequisite: Before calling this API operation, call GetRoutineStagingCodeUploadInfo to obtain OSS upload credentials. Upload the code file through OSS POST. After the upload callback succeeds, call this API operation to submit the code.
+// Submits the staging code of an Edge Routine to generate a production version. Before calling this API operation, you must call GetRoutineStagingCodeUploadInfo to obtain the Object Storage Service (OSS) upload credentials, upload the code file by using an OSS POST request, and then call this API operation after the upload callback succeeds.
 //
 // @param request - CommitRoutineStagingCodeRequest
 //
@@ -2644,7 +2648,7 @@ func CreateCustomHostname(client *Client, request *CreateCustomHostnameRequest) 
 
 // Summary:
 //
-// Creates a custom response code rule for a site.
+// Creates a custom response code configuration for a site.
 //
 // @param request - CreateCustomResponseCodeRuleRequest
 //
@@ -2716,7 +2720,7 @@ func CreateCustomResponseCodeRuleWithOptions(client *Client, request *CreateCust
 
 // Summary:
 //
-// Creates a custom response code rule for a site.
+// Creates a custom response code configuration for a site.
 //
 // @param request - CreateCustomResponseCodeRuleRequest
 //
@@ -2934,7 +2938,7 @@ func CreateEdgeContainerApp(client *Client, request *CreateEdgeContainerAppReque
 
 // Summary:
 //
-// # Create an image secret for the edge container application
+// Creates an image secret for an edge container application.
 //
 // @param request - CreateEdgeContainerAppImageSecretRequest
 //
@@ -2990,7 +2994,7 @@ func CreateEdgeContainerAppImageSecretWithOptions(client *Client, request *Creat
 
 // Summary:
 //
-// # Create an image secret for the edge container application
+// Creates an image secret for an edge container application.
 //
 // @param request - CreateEdgeContainerAppImageSecretRequest
 //
@@ -3078,15 +3082,15 @@ func CreateEdgeContainerAppRecord(client *Client, request *CreateEdgeContainerAp
 
 // Summary:
 //
-// Creates an edge container application version. You can iteratively release applications by version.
+// Creates a version for an edge container application to support iterative releases.
 //
 // Note:
 //
-// 1) Your account must have an ESA plan with the Edge Container feature enabled.
+// 1) Your account must be subscribed to an ESA plan that includes the Edge Container feature.
 //
-// 2) Call CreateEdgeContainerApp first to create an application and obtain the AppId.
+// 2) You must call CreateEdgeContainerApp to create an application and obtain the AppId.
 //
-// 3) Complete call chain example: CreateEdgeContainerApp → ListEdgeContainerApps → CreateEdgeContainerAppVersion.
+// 3) A complete call chain example is provided (CreateEdgeContainerApp → ListEdgeContainerApps → CreateEdgeContainerAppVersion).
 //
 // @param tmpReq - CreateEdgeContainerAppVersionRequest
 //
@@ -3148,15 +3152,15 @@ func CreateEdgeContainerAppVersionWithOptions(client *Client, tmpReq *CreateEdge
 
 // Summary:
 //
-// Creates an edge container application version. You can iteratively release applications by version.
+// Creates a version for an edge container application to support iterative releases.
 //
 // Note:
 //
-// 1) Your account must have an ESA plan with the Edge Container feature enabled.
+// 1) Your account must be subscribed to an ESA plan that includes the Edge Container feature.
 //
-// 2) Call CreateEdgeContainerApp first to create an application and obtain the AppId.
+// 2) You must call CreateEdgeContainerApp to create an application and obtain the AppId.
 //
-// 3) Complete call chain example: CreateEdgeContainerApp → ListEdgeContainerApps → CreateEdgeContainerAppVersion.
+// 3) A complete call chain example is provided (CreateEdgeContainerApp → ListEdgeContainerApps → CreateEdgeContainerAppVersion).
 //
 // @param request - CreateEdgeContainerAppVersionRequest
 //
@@ -3239,6 +3243,98 @@ func CreateEnvironment(client *Client, request *CreateEnvironmentRequest) (_resu
 	runtime := &dara.RuntimeOptions{}
 	_result = &CreateEnvironmentResponse{}
 	_body, _err := CreateEnvironmentWithOptions(client,request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Summary:
+//
+// Creates an error code redirection rule.
+//
+// @param tmpReq - CreateErrorPagesRedirectRuleRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return CreateErrorPagesRedirectRuleResponse
+func CreateErrorPagesRedirectRuleWithOptions(client *Client, tmpReq *CreateErrorPagesRedirectRuleRequest, runtime *dara.RuntimeOptions) (_result *CreateErrorPagesRedirectRuleResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = tmpReq.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	request := &CreateErrorPagesRedirectRuleShrinkRequest{}
+	openapiutil.Convert(tmpReq, request)
+	if !dara.IsNil(tmpReq.ErrorPagesRedirect) {
+		request.ErrorPagesRedirectShrink = openapiutil.ArrayToStringWithSpecifiedStyle(tmpReq.ErrorPagesRedirect, dara.String("ErrorPagesRedirect"), dara.String("json"))
+	}
+
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.ErrorPagesRedirectShrink) {
+		query["ErrorPagesRedirect"] = request.ErrorPagesRedirectShrink
+	}
+
+	if !dara.IsNil(request.Rule) {
+		query["Rule"] = request.Rule
+	}
+
+	if !dara.IsNil(request.RuleEnable) {
+		query["RuleEnable"] = request.RuleEnable
+	}
+
+	if !dara.IsNil(request.RuleName) {
+		query["RuleName"] = request.RuleName
+	}
+
+	if !dara.IsNil(request.Sequence) {
+		query["Sequence"] = request.Sequence
+	}
+
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	if !dara.IsNil(request.SiteVersion) {
+		query["SiteVersion"] = request.SiteVersion
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("CreateErrorPagesRedirectRule"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &CreateErrorPagesRedirectRuleResponse{}
+	_body, _err := client.CallApi(params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Creates an error code redirection rule.
+//
+// @param request - CreateErrorPagesRedirectRuleRequest
+//
+// @return CreateErrorPagesRedirectRuleResponse
+func CreateErrorPagesRedirectRule(client *Client, request *CreateErrorPagesRedirectRuleRequest) (_result *CreateErrorPagesRedirectRuleResponse, _err error) {
+	runtime := &dara.RuntimeOptions{}
+	_result = &CreateErrorPagesRedirectRuleResponse{}
+	_body, _err := CreateErrorPagesRedirectRuleWithOptions(client,request, runtime)
 	if _err != nil {
 		return _result, _err
 	}
@@ -4036,7 +4132,7 @@ func CreateKvNamespace(client *Client, request *CreateKvNamespaceRequest) (_resu
 
 // Summary:
 //
-// Creates a custom list. Custom lists are typically referenced by the rule matching engine for values used in various security policies to implement complex logic and control.
+// Creates a custom list for referencing values in rule matching engines to implement complex logic and control in various security policies.
 //
 // @param tmpReq - CreateListRequest
 //
@@ -4098,7 +4194,7 @@ func CreateListWithOptions(client *Client, tmpReq *CreateListRequest, runtime *d
 
 // Summary:
 //
-// Creates a custom list. Custom lists are typically referenced by the rule matching engine for values used in various security policies to implement complex logic and control.
+// Creates a custom list for referencing values in rule matching engines to implement complex logic and control in various security policies.
 //
 // @param request - CreateListRequest
 //
@@ -4116,13 +4212,13 @@ func CreateList(client *Client, request *CreateListRequest) (_result *CreateList
 
 // Summary:
 //
-// Creates a load balancer instance that supports custom routing policies, session persistence, monitoring configurations, and other advanced features.
+// Creates a load balancer instance with advanced features such as custom routing policies, session persistence, and monitoring configurations.
 //
 // Description:
 //
-// Creates a load balancing service based on your business requirements. You can configure settings such as adaptive routing, weighted polling, rule matching, and health checks to effectively manage and optimize traffic.
+// This API allows you to configure load balancing services based on your business requirements, including but not limited to adaptive routing, weighted round-robin, rule matching, and health checks, to achieve effective traffic management and optimization.
 //
-// Only Enterprise plans support the load balancing service. To use this feature, contact Alibaba Cloud sales to apply for an Enterprise plan.
+// Only the Enterprise Edition plan supports the load balancer service. To use this service, contact Alibaba Cloud sales to apply for the Enterprise Edition plan.
 //
 // @param tmpReq - CreateLoadBalancerRequest
 //
@@ -4244,13 +4340,13 @@ func CreateLoadBalancerWithOptions(client *Client, tmpReq *CreateLoadBalancerReq
 
 // Summary:
 //
-// Creates a load balancer instance that supports custom routing policies, session persistence, monitoring configurations, and other advanced features.
+// Creates a load balancer instance with advanced features such as custom routing policies, session persistence, and monitoring configurations.
 //
 // Description:
 //
-// Creates a load balancing service based on your business requirements. You can configure settings such as adaptive routing, weighted polling, rule matching, and health checks to effectively manage and optimize traffic.
+// This API allows you to configure load balancing services based on your business requirements, including but not limited to adaptive routing, weighted round-robin, rule matching, and health checks, to achieve effective traffic management and optimization.
 //
-// Only Enterprise plans support the load balancing service. To use this feature, contact Alibaba Cloud sales to apply for an Enterprise plan.
+// Only the Enterprise Edition plan supports the load balancer service. To use this service, contact Alibaba Cloud sales to apply for the Enterprise Edition plan.
 //
 // @param request - CreateLoadBalancerRequest
 //
@@ -4268,11 +4364,11 @@ func CreateLoadBalancer(client *Client, request *CreateLoadBalancerRequest) (_re
 
 // Summary:
 //
-// Adds a network optimization configuration for a site.
+// Creates a network optimization configuration for a site.
 //
 // Description:
 //
-// The site plan must be Standard Edition or higher to use the WebSocket feature. When calling this API, you must provide at least one feature configuration parameter. Providing only SiteId returns an error.
+// The site plan must be Standard Edition or higher to use the WebSocket feature. In addition, when you call this API operation, you must specify at least one feature configuration parameter. Specifying only SiteId returns an error.
 //
 // @param request - CreateNetworkOptimizationRequest
 //
@@ -4356,11 +4452,11 @@ func CreateNetworkOptimizationWithOptions(client *Client, request *CreateNetwork
 
 // Summary:
 //
-// Adds a network optimization configuration for a site.
+// Creates a network optimization configuration for a site.
 //
 // Description:
 //
-// The site plan must be Standard Edition or higher to use the WebSocket feature. When calling this API, you must provide at least one feature configuration parameter. Providing only SiteId returns an error.
+// The site plan must be Standard Edition or higher to use the WebSocket feature. In addition, when you call this API operation, you must specify at least one feature configuration parameter. Specifying only SiteId returns an error.
 //
 // @param request - CreateNetworkOptimizationRequest
 //
@@ -4762,7 +4858,7 @@ func CreatePage(client *Client, request *CreatePageRequest) (_result *CreatePage
 
 // Summary:
 //
-// Create a DNS record under a site.
+// Creates a DNS record under a site.
 //
 // @param tmpReq - CreateRecordRequest
 //
@@ -4864,7 +4960,7 @@ func CreateRecordWithOptions(client *Client, tmpReq *CreateRecordRequest, runtim
 
 // Summary:
 //
-// Create a DNS record under a site.
+// Creates a DNS record under a site.
 //
 // @param request - CreateRecordRequest
 //
@@ -7747,7 +7843,7 @@ func DeleteClientCertificate(client *Client, request *DeleteClientCertificateReq
 
 // Summary:
 //
-// # Delete compression rule
+// Deletes the compression rule configuration for a site.
 //
 // @param request - DeleteCompressionRuleRequest
 //
@@ -7795,7 +7891,7 @@ func DeleteCompressionRuleWithOptions(client *Client, request *DeleteCompression
 
 // Summary:
 //
-// # Delete compression rule
+// Deletes the compression rule configuration for a site.
 //
 // @param request - DeleteCompressionRuleRequest
 //
@@ -8345,7 +8441,73 @@ func DeleteEnvironment(client *Client, request *DeleteEnvironmentRequest) (_resu
 
 // Summary:
 //
-// Deletes a rule created by Deep Learning and Protection.
+// Deletes the error code redirection configuration.
+//
+// @param request - DeleteErrorPagesRedirectRuleRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return DeleteErrorPagesRedirectRuleResponse
+func DeleteErrorPagesRedirectRuleWithOptions(client *Client, request *DeleteErrorPagesRedirectRuleRequest, runtime *dara.RuntimeOptions) (_result *DeleteErrorPagesRedirectRuleResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.ConfigId) {
+		query["ConfigId"] = request.ConfigId
+	}
+
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("DeleteErrorPagesRedirectRule"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &DeleteErrorPagesRedirectRuleResponse{}
+	_body, _err := client.CallApi(params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Deletes the error code redirection configuration.
+//
+// @param request - DeleteErrorPagesRedirectRuleRequest
+//
+// @return DeleteErrorPagesRedirectRuleResponse
+func DeleteErrorPagesRedirectRule(client *Client, request *DeleteErrorPagesRedirectRuleRequest) (_result *DeleteErrorPagesRedirectRuleResponse, _err error) {
+	runtime := &dara.RuntimeOptions{}
+	_result = &DeleteErrorPagesRedirectRuleResponse{}
+	_body, _err := DeleteErrorPagesRedirectRuleWithOptions(client,request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Summary:
+//
+// Deletes the rules issued by deep learning and protection.
 //
 // @param request - DeleteHttpDDoSIntelligentRuleRequest
 //
@@ -8397,7 +8559,7 @@ func DeleteHttpDDoSIntelligentRuleWithOptions(client *Client, request *DeleteHtt
 
 // Summary:
 //
-// Deletes a rule created by Deep Learning and Protection.
+// Deletes the rules issued by deep learning and protection.
 //
 // @param request - DeleteHttpDDoSIntelligentRuleRequest
 //
@@ -8877,7 +9039,7 @@ func DeleteImageTransform(client *Client, request *DeleteImageTransformRequest) 
 
 // Summary:
 //
-// Deletes a keyless server configuration.
+// Deletes a Keyless server configuration.
 //
 // @param request - DeleteKeylessServerRequest
 //
@@ -8925,7 +9087,7 @@ func DeleteKeylessServerWithOptions(client *Client, request *DeleteKeylessServer
 
 // Summary:
 //
-// Deletes a keyless server configuration.
+// Deletes a Keyless server configuration.
 //
 // @param request - DeleteKeylessServerRequest
 //
@@ -9323,7 +9485,7 @@ func DeleteOriginCaCertificate(client *Client, request *DeleteOriginCaCertificat
 
 // Summary:
 //
-// Deletes an origin client certificate for a specific site.
+// Deletes a domain-level back-to-origin client certificate.
 //
 // @param request - DeleteOriginClientCertificateRequest
 //
@@ -9363,7 +9525,7 @@ func DeleteOriginClientCertificateWithOptions(client *Client, request *DeleteOri
 
 // Summary:
 //
-// Deletes an origin client certificate for a specific site.
+// Deletes a domain-level back-to-origin client certificate.
 //
 // @param request - DeleteOriginClientCertificateRequest
 //
@@ -9509,7 +9671,7 @@ func DeleteOriginProtection(client *Client, request *DeleteOriginProtectionReque
 
 // Summary:
 //
-// # Delete Origin Rule Configuration
+// Deletes the back-to-origin rule configuration.
 //
 // @param request - DeleteOriginRuleRequest
 //
@@ -9557,7 +9719,7 @@ func DeleteOriginRuleWithOptions(client *Client, request *DeleteOriginRuleReques
 
 // Summary:
 //
-// # Delete Origin Rule Configuration
+// Deletes the back-to-origin rule configuration.
 //
 // @param request - DeleteOriginRuleRequest
 //
@@ -9703,7 +9865,7 @@ func DeleteRecord(client *Client, request *DeleteRecordRequest) (_result *Delete
 
 // Summary:
 //
-// Deletes a URL redirect rule for a website.
+// Deletes the redirect configuration for a site.
 //
 // @param request - DeleteRedirectRuleRequest
 //
@@ -9751,7 +9913,7 @@ func DeleteRedirectRuleWithOptions(client *Client, request *DeleteRedirectRuleRe
 
 // Summary:
 //
-// Deletes a URL redirect rule for a website.
+// Deletes the redirect configuration for a site.
 //
 // @param request - DeleteRedirectRuleRequest
 //
@@ -9769,7 +9931,7 @@ func DeleteRedirectRule(client *Client, request *DeleteRedirectRuleRequest) (_re
 
 // Summary:
 //
-// Deletes a URL rewrite rule for a website.
+// Deletes the URL rewrite configuration for a site.
 //
 // @param request - DeleteRewriteUrlRuleRequest
 //
@@ -9817,7 +9979,7 @@ func DeleteRewriteUrlRuleWithOptions(client *Client, request *DeleteRewriteUrlRu
 
 // Summary:
 //
-// Deletes a URL rewrite rule for a website.
+// Deletes the URL rewrite configuration for a site.
 //
 // @param request - DeleteRewriteUrlRuleRequest
 //
@@ -10025,15 +10187,15 @@ func DeleteRoutineCodeVersion(client *Client, request *DeleteRoutineCodeVersionR
 
 // Summary:
 //
-// Deletes environment variables of a Routine.
+// Deletes the environment variables of a routine.
 //
 // Description:
 //
-// ## Operation description
+// ## Request description
 //
-// - When you create a Routine code version for deployment, the environment name `Env` supports only the staging environment `staging` or the production environment `production`.
+// - When you create a deployment for a routine code version, the `Env` parameter only supports `staging` for the staging environment and `production` for the production environment.
 //
-// - The `CodeVersions` parameter supports canary release of up to two versions, and the total proportion of these versions must equal 100%.
+// - The `CodeVersions` parameter supports canary releases for up to two versions, and the sum of the traffic ratios for these versions must equal 100%.
 //
 // @param tmpReq - DeleteRoutineEnvironmentVariablesRequest
 //
@@ -10091,15 +10253,15 @@ func DeleteRoutineEnvironmentVariablesWithOptions(client *Client, tmpReq *Delete
 
 // Summary:
 //
-// Deletes environment variables of a Routine.
+// Deletes the environment variables of a routine.
 //
 // Description:
 //
-// ## Operation description
+// ## Request description
 //
-// - When you create a Routine code version for deployment, the environment name `Env` supports only the staging environment `staging` or the production environment `production`.
+// - When you create a deployment for a routine code version, the `Env` parameter only supports `staging` for the staging environment and `production` for the production environment.
 //
-// - The `CodeVersions` parameter supports canary release of up to two versions, and the total proportion of these versions must equal 100%.
+// - The `CodeVersions` parameter supports canary releases for up to two versions, and the sum of the traffic ratios for these versions must equal 100%.
 //
 // @param request - DeleteRoutineEnvironmentVariablesRequest
 //
@@ -10767,19 +10929,19 @@ func DeleteUrlObservation(client *Client, request *DeleteUrlObservationRequest) 
 
 // Summary:
 //
-// Deletes a user task delivery configuration based on the specified task name and Alibaba Cloud UID.
+// Deletes the user task delivery configuration based on the specified task name and Alibaba Cloud UID.
 //
 // Description:
 //
-// This operation allows you to delete an existing task delivery configuration based on the specified **task name*	- and **Alibaba Cloud UID**. Before proceeding, verify that the provided information is accurate to avoid disrupting the processing of related logs or data.
+// This operation allows you to delete a configured task delivery configuration based on the specified **task name*	- and **Alibaba Cloud UID**. Before the operation, ensure that the provided information is accurate to avoid affecting the normal processing of related logs or data.
 //
 // **Note:**
 //
-// - The deletion operation is irreversible. Proceed with caution.
+// - The delete operation is irreversible. Proceed with caution.
 //
 // - Only accounts with the required permissions can call this operation.
 //
-// - You can use the returned `RequestId` to track the request progress and troubleshoot issues.
+// - The returned `RequestId` can be used to track the request processing progress and troubleshoot issues.
 //
 // @param request - DeleteUserDeliveryTaskRequest
 //
@@ -10823,19 +10985,19 @@ func DeleteUserDeliveryTaskWithOptions(client *Client, request *DeleteUserDelive
 
 // Summary:
 //
-// Deletes a user task delivery configuration based on the specified task name and Alibaba Cloud UID.
+// Deletes the user task delivery configuration based on the specified task name and Alibaba Cloud UID.
 //
 // Description:
 //
-// This operation allows you to delete an existing task delivery configuration based on the specified **task name*	- and **Alibaba Cloud UID**. Before proceeding, verify that the provided information is accurate to avoid disrupting the processing of related logs or data.
+// This operation allows you to delete a configured task delivery configuration based on the specified **task name*	- and **Alibaba Cloud UID**. Before the operation, ensure that the provided information is accurate to avoid affecting the normal processing of related logs or data.
 //
 // **Note:**
 //
-// - The deletion operation is irreversible. Proceed with caution.
+// - The delete operation is irreversible. Proceed with caution.
 //
 // - Only accounts with the required permissions can call this operation.
 //
-// - You can use the returned `RequestId` to track the request progress and troubleshoot issues.
+// - The returned `RequestId` can be used to track the request processing progress and troubleshoot issues.
 //
 // @param request - DeleteUserDeliveryTaskRequest
 //
@@ -14210,7 +14372,7 @@ func EnableCustomScenePolicy(client *Client, request *EnableCustomScenePolicyReq
 
 // Summary:
 //
-// Exports the CNAME values of all records under the current site. When the site access mode is switched to CNAME access, you can call this operation to retrieve pre-configured CNAME values to prevent service interruptions.
+// Exports the CNAME values of all records for the current site. When you switch the site access mode to CNAME access, you can call this operation to retrieve pre-configured CNAME values and prevent service interruptions.
 //
 // @param request - ExportRecordCnamesRequest
 //
@@ -14250,7 +14412,7 @@ func ExportRecordCnamesWithOptions(client *Client, request *ExportRecordCnamesRe
 
 // Summary:
 //
-// Exports the CNAME values of all records under the current site. When the site access mode is switched to CNAME access, you can call this operation to retrieve pre-configured CNAME values to prevent service interruptions.
+// Exports the CNAME values of all records for the current site. When you switch the site access mode to CNAME access, you can call this operation to retrieve pre-configured CNAME values and prevent service interruptions.
 //
 // @param request - ExportRecordCnamesRequest
 //
@@ -15107,7 +15269,7 @@ func GetClientCertificateHostnames(client *Client, request *GetClientCertificate
 
 // Summary:
 //
-// # Queries the CNAME flattening configuration of a website
+// Queries the CNAME flattening configuration of a site.
 //
 // @param request - GetCnameFlatteningRequest
 //
@@ -15147,7 +15309,7 @@ func GetCnameFlatteningWithOptions(client *Client, request *GetCnameFlatteningRe
 
 // Summary:
 //
-// # Queries the CNAME flattening configuration of a website
+// Queries the CNAME flattening configuration of a site.
 //
 // @param request - GetCnameFlatteningRequest
 //
@@ -15165,7 +15327,7 @@ func GetCnameFlattening(client *Client, request *GetCnameFlatteningRequest) (_re
 
 // Summary:
 //
-// # Query Compression Rule Details
+// Queries the details of compression rules for a site.
 //
 // @param request - GetCompressionRuleRequest
 //
@@ -15205,7 +15367,7 @@ func GetCompressionRuleWithOptions(client *Client, request *GetCompressionRuleRe
 
 // Summary:
 //
-// # Query Compression Rule Details
+// Queries the details of compression rules for a site.
 //
 // @param request - GetCompressionRuleRequest
 //
@@ -16319,6 +16481,72 @@ func GetErService(client *Client, request *GetErServiceRequest) (_result *GetErS
 
 // Summary:
 //
+// Queries the details of the error code redirect configuration.
+//
+// @param request - GetErrorPagesRedirectRuleRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return GetErrorPagesRedirectRuleResponse
+func GetErrorPagesRedirectRuleWithOptions(client *Client, request *GetErrorPagesRedirectRuleRequest, runtime *dara.RuntimeOptions) (_result *GetErrorPagesRedirectRuleResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.ConfigId) {
+		query["ConfigId"] = request.ConfigId
+	}
+
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("GetErrorPagesRedirectRule"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &GetErrorPagesRedirectRuleResponse{}
+	_body, _err := client.CallApi(params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Queries the details of the error code redirect configuration.
+//
+// @param request - GetErrorPagesRedirectRuleRequest
+//
+// @return GetErrorPagesRedirectRuleResponse
+func GetErrorPagesRedirectRule(client *Client, request *GetErrorPagesRedirectRuleRequest) (_result *GetErrorPagesRedirectRuleResponse, _err error) {
+	runtime := &dara.RuntimeOptions{}
+	_result = &GetErrorPagesRedirectRuleResponse{}
+	_body, _err := GetErrorPagesRedirectRuleWithOptions(client,request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Summary:
+//
 // Downloads the failed file for a specified upload task.
 //
 // @param request - GetFailFileRequest
@@ -16377,7 +16605,7 @@ func GetFailFile(client *Client, request *GetFailFileRequest) (_result *GetFailF
 
 // Summary:
 //
-// Queries the configuration details of an HTTP request header modification rule for a website.
+// Queries the details of the HTTP incoming request header modification configuration for a site.
 //
 // @param request - GetHttpIncomingRequestHeaderModificationRuleRequest
 //
@@ -16417,7 +16645,7 @@ func GetHttpIncomingRequestHeaderModificationRuleWithOptions(client *Client, req
 
 // Summary:
 //
-// Queries the configuration details of an HTTP request header modification rule for a website.
+// Queries the details of the HTTP incoming request header modification configuration for a site.
 //
 // @param request - GetHttpIncomingRequestHeaderModificationRuleRequest
 //
@@ -16493,7 +16721,7 @@ func GetHttpIncomingResponseHeaderModificationRule(client *Client, request *GetH
 
 // Summary:
 //
-// Retrieves the details of an HTTP request header modification rule for a site.
+// Queries the details of the HTTP request header modification configuration for a site.
 //
 // @param request - GetHttpRequestHeaderModificationRuleRequest
 //
@@ -16533,7 +16761,7 @@ func GetHttpRequestHeaderModificationRuleWithOptions(client *Client, request *Ge
 
 // Summary:
 //
-// Retrieves the details of an HTTP request header modification rule for a site.
+// Queries the details of the HTTP request header modification configuration for a site.
 //
 // @param request - GetHttpRequestHeaderModificationRuleRequest
 //
@@ -16783,7 +17011,7 @@ func GetIPv6(client *Client, request *GetIPv6Request) (_result *GetIPv6Response,
 
 // Summary:
 //
-// Queries a single site image transformation configuration.
+// Queries a single image transform configuration for a site.
 //
 // @param request - GetImageTransformRequest
 //
@@ -16823,7 +17051,7 @@ func GetImageTransformWithOptions(client *Client, request *GetImageTransformRequ
 
 // Summary:
 //
-// Queries a single site image transformation configuration.
+// Queries a single image transform configuration for a site.
 //
 // @param request - GetImageTransformRequest
 //
@@ -17320,7 +17548,7 @@ func GetMainDomainName(client *Client, request *GetMainDomainNameRequest) (_resu
 
 // Summary:
 //
-// Retrieves the managed transform configuration for a site.
+// Queries the site hosting transition configuration.
 //
 // @param request - GetManagedTransformRequest
 //
@@ -17360,7 +17588,7 @@ func GetManagedTransformWithOptions(client *Client, request *GetManagedTransform
 
 // Summary:
 //
-// Retrieves the managed transform configuration for a site.
+// Queries the site hosting transition configuration.
 //
 // @param request - GetManagedTransformRequest
 //
@@ -17502,7 +17730,7 @@ func GetNetworkOptimization(client *Client, request *GetNetworkOptimizationReque
 
 // Summary:
 //
-// Retrieves the CA certificate information of an origin server.
+// Retrieves the CA certificate information of the origin server.
 //
 // @param request - GetOriginCaCertificateRequest
 //
@@ -17542,7 +17770,7 @@ func GetOriginCaCertificateWithOptions(client *Client, request *GetOriginCaCerti
 
 // Summary:
 //
-// Retrieves the CA certificate information of an origin server.
+// Retrieves the CA certificate information of the origin server.
 //
 // @param request - GetOriginCaCertificateRequest
 //
@@ -17618,7 +17846,7 @@ func GetOriginClientCertificate(client *Client, request *GetOriginClientCertific
 
 // Summary:
 //
-// Retrieves the hostnames associated with a specific origin client certificate.
+// Retrieves the list of domain names bound to a back-to-origin client certificate at the domain name level.
 //
 // @param request - GetOriginClientCertificateHostnamesRequest
 //
@@ -17658,7 +17886,7 @@ func GetOriginClientCertificateHostnamesWithOptions(client *Client, request *Get
 
 // Summary:
 //
-// Retrieves the hostnames associated with a specific origin client certificate.
+// Retrieves the list of domain names bound to a back-to-origin client certificate at the domain name level.
 //
 // @param request - GetOriginClientCertificateHostnamesRequest
 //
@@ -17734,7 +17962,7 @@ func GetOriginPool(client *Client, request *GetOriginPoolRequest) (_result *GetO
 
 // Summary:
 //
-// Queries site origin protection configurations, including the origin protection switch, the origin convergence switch, whether the origin IP whitelist needs to be updated, and detailed information about the origin IP whitelist, including the current origin IP whitelist used by the site, the latest origin IP whitelist, and the differences between them.
+// Queries the origin server protection configurations for a site, including the origin server protection switch, the back-to-origin convergence switch, and whether the back-to-origin IP addresses whitelist needs to be updated. It also provides detailed information about the back-to-origin IP addresses whitelist, including the current whitelist used by the site, the latest whitelist, and the differences between them.
 //
 // @param request - GetOriginProtectionRequest
 //
@@ -17774,7 +18002,7 @@ func GetOriginProtectionWithOptions(client *Client, request *GetOriginProtection
 
 // Summary:
 //
-// Queries site origin protection configurations, including the origin protection switch, the origin convergence switch, whether the origin IP whitelist needs to be updated, and detailed information about the origin IP whitelist, including the current origin IP whitelist used by the site, the latest origin IP whitelist, and the differences between them.
+// Queries the origin server protection configurations for a site, including the origin server protection switch, the back-to-origin convergence switch, and whether the back-to-origin IP addresses whitelist needs to be updated. It also provides detailed information about the back-to-origin IP addresses whitelist, including the current whitelist used by the site, the latest whitelist, and the differences between them.
 //
 // @param request - GetOriginProtectionRequest
 //
@@ -18164,7 +18392,7 @@ func GetRealtimeDeliveryField(client *Client, request *GetRealtimeDeliveryFieldR
 
 // Summary:
 //
-// Retrieves the detailed configuration of a single DNS record, including the record value, priority, and back-to-origin authentication configuration (exclusive to CNAME records).
+// Retrieves the detailed configuration information of a single DNS record, including the record value, priority, and back-to-origin authentication configuration (exclusive to CNAME records).
 //
 // @param request - GetRecordRequest
 //
@@ -18204,7 +18432,7 @@ func GetRecordWithOptions(client *Client, request *GetRecordRequest, runtime *da
 
 // Summary:
 //
-// Retrieves the detailed configuration of a single DNS record, including the record value, priority, and back-to-origin authentication configuration (exclusive to CNAME records).
+// Retrieves the detailed configuration information of a single DNS record, including the record value, priority, and back-to-origin authentication configuration (exclusive to CNAME records).
 //
 // @param request - GetRecordRequest
 //
@@ -19200,7 +19428,7 @@ func GetSite(client *Client, request *GetSiteRequest) (_result *GetSiteResponse,
 
 // Summary:
 //
-// Queries the nameservers configured for a website.
+// Queries the DNS server names configured for the current site.
 //
 // @param request - GetSiteCurrentNSRequest
 //
@@ -19240,7 +19468,7 @@ func GetSiteCurrentNSWithOptions(client *Client, request *GetSiteCurrentNSReques
 
 // Summary:
 //
-// Queries the nameservers configured for a website.
+// Queries the DNS server names configured for the current site.
 //
 // @param request - GetSiteCurrentNSRequest
 //
@@ -20232,9 +20460,9 @@ func GetUserMaxPlanQuota(client *Client, request *GetUserMaxPlanQuotaRequest) (_
 //
 // Description:
 //
-// ## Operation description
+// ## Request instructions
 //
-// By calling the `GetUserWafRuleset` operation, you can retrieve information about a specific Web Application Firewall (WAF) ruleset based on the instance ID and ruleset ID. The returned information includes but is not limited to the position, name, description, status, and specific rules of the ruleset. Make sure that you correctly specify the required parameters to avoid request failures.
+// By calling the `GetUserWafRuleset` operation, you can retrieve specific Web Application Firewall (WAF) ruleset information based on the provided instance ID and ruleset ID. The information returned by this operation includes but is not limited to the position, name, description, and status of the ruleset, as well as detailed content such as the specific rules it contains. Correctly specify the required parameters when making a request to avoid request failures.
 //
 // @param request - GetUserWafRulesetRequest
 //
@@ -20286,9 +20514,9 @@ func GetUserWafRulesetWithOptions(client *Client, request *GetUserWafRulesetRequ
 //
 // Description:
 //
-// ## Operation description
+// ## Request instructions
 //
-// By calling the `GetUserWafRuleset` operation, you can retrieve information about a specific Web Application Firewall (WAF) ruleset based on the instance ID and ruleset ID. The returned information includes but is not limited to the position, name, description, status, and specific rules of the ruleset. Make sure that you correctly specify the required parameters to avoid request failures.
+// By calling the `GetUserWafRuleset` operation, you can retrieve specific Web Application Firewall (WAF) ruleset information based on the provided instance ID and ruleset ID. The information returned by this operation includes but is not limited to the position, name, description, and status of the ruleset, as well as detailed content such as the specific rules it contains. Correctly specify the required parameters when making a request to avoid request failures.
 //
 // @param request - GetUserWafRulesetRequest
 //
@@ -21291,7 +21519,7 @@ func ListCertificatesByRecord(client *Client, request *ListCertificatesByRecordR
 
 // Summary:
 //
-// # Query TLS Cipher Suite List
+// Queries the list of cipher suite names based on the cipher suite group name.
 //
 // @param request - ListCiphersRequest
 //
@@ -21331,7 +21559,7 @@ func ListCiphersWithOptions(client *Client, request *ListCiphersRequest, runtime
 
 // Summary:
 //
-// # Query TLS Cipher Suite List
+// Queries the list of cipher suite names based on the cipher suite group name.
 //
 // @param request - ListCiphersRequest
 //
@@ -22334,6 +22562,92 @@ func ListEnvironments(client *Client, request *ListEnvironmentsRequest) (_result
 
 // Summary:
 //
+// Queries the error code redirection configurations.
+//
+// @param request - ListErrorPagesRedirectRulesRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return ListErrorPagesRedirectRulesResponse
+func ListErrorPagesRedirectRulesWithOptions(client *Client, request *ListErrorPagesRedirectRulesRequest, runtime *dara.RuntimeOptions) (_result *ListErrorPagesRedirectRulesResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = request.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.ConfigId) {
+		query["ConfigId"] = request.ConfigId
+	}
+
+	if !dara.IsNil(request.ConfigType) {
+		query["ConfigType"] = request.ConfigType
+	}
+
+	if !dara.IsNil(request.PageNumber) {
+		query["PageNumber"] = request.PageNumber
+	}
+
+	if !dara.IsNil(request.PageSize) {
+		query["PageSize"] = request.PageSize
+	}
+
+	if !dara.IsNil(request.RuleName) {
+		query["RuleName"] = request.RuleName
+	}
+
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	if !dara.IsNil(request.SiteVersion) {
+		query["SiteVersion"] = request.SiteVersion
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("ListErrorPagesRedirectRules"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &ListErrorPagesRedirectRulesResponse{}
+	_body, _err := client.CallApi(params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Queries the error code redirection configurations.
+//
+// @param request - ListErrorPagesRedirectRulesRequest
+//
+// @return ListErrorPagesRedirectRulesResponse
+func ListErrorPagesRedirectRules(client *Client, request *ListErrorPagesRedirectRulesRequest) (_result *ListErrorPagesRedirectRulesResponse, _err error) {
+	runtime := &dara.RuntimeOptions{}
+	_result = &ListErrorPagesRedirectRulesResponse{}
+	_body, _err := ListErrorPagesRedirectRulesWithOptions(client,request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Summary:
+//
 // Queries the list of HTTP incoming request header modification configurations for a site.
 //
 // @param request - ListHttpIncomingRequestHeaderModificationRulesRequest
@@ -23052,7 +23366,7 @@ func ListKvs(client *Client, request *ListKvsRequest) (_result *ListKvsResponse,
 
 // Summary:
 //
-// Lists all custom lists under the account along with their details. You can use query parameters to filter results and paginate to retrieve a specific set of lists.
+// Lists all custom lists and their details under the account. You can filter the results by using query parameters and paginate the results to retrieve a specific set of lists.
 //
 // @param tmpReq - ListListsRequest
 //
@@ -23110,7 +23424,7 @@ func ListListsWithOptions(client *Client, tmpReq *ListListsRequest, runtime *dar
 
 // Summary:
 //
-// Lists all custom lists under the account along with their details. You can use query parameters to filter results and paginate to retrieve a specific set of lists.
+// Lists all custom lists and their details under the account. You can filter the results by using query parameters and paginate the results to retrieve a specific set of lists.
 //
 // @param request - ListListsRequest
 //
@@ -23276,7 +23590,7 @@ func ListLoadBalancerRegions(client *Client, request *ListLoadBalancerRegionsReq
 
 // Summary:
 //
-// Queries the list of load balancers under a site and returns load balancing information. You can query by load balancer name. Paging is supported.
+// Queries the list of load balancing instances under a site and returns the load balancing information under the site. Supports querying by load balancing name and paging.
 //
 // @param request - ListLoadBalancersRequest
 //
@@ -23316,7 +23630,7 @@ func ListLoadBalancersWithOptions(client *Client, request *ListLoadBalancersRequ
 
 // Summary:
 //
-// Queries the list of load balancers under a site and returns load balancing information. You can query by load balancer name. Paging is supported.
+// Queries the list of load balancing instances under a site and returns the load balancing information under the site. Supports querying by load balancing name and paging.
 //
 // @param request - ListLoadBalancersRequest
 //
@@ -23334,7 +23648,7 @@ func ListLoadBalancers(client *Client, request *ListLoadBalancersRequest) (_resu
 
 // Summary:
 //
-// Lists all WAF managed rule groups under the current account. You can call this operation to retrieve a list of all rule groups and their summary information.
+// Lists all Web Application Firewall (WAF) managed rule groups within your account. You can use this operation to retrieve a list of all rule groups and their summary information.
 //
 // @param request - ListManagedRulesGroupsRequest
 //
@@ -23382,7 +23696,7 @@ func ListManagedRulesGroupsWithOptions(client *Client, request *ListManagedRules
 
 // Summary:
 //
-// Lists all WAF managed rule groups under the current account. You can call this operation to retrieve a list of all rule groups and their summary information.
+// Lists all Web Application Firewall (WAF) managed rule groups within your account. You can use this operation to retrieve a list of all rule groups and their summary information.
 //
 // @param request - ListManagedRulesGroupsRequest
 //
@@ -23574,7 +23888,7 @@ func ListOriginClientCertificates(client *Client, request *ListOriginClientCerti
 
 // Summary:
 //
-// Lists all origin pools within a site. Supports pagination and searching by origin pool name (exact or fuzzy).
+// Queries all origin address pools under a site. Supports pagination and exact or fuzzy search by origin address pool name.
 //
 // @param request - ListOriginPoolsRequest
 //
@@ -23614,7 +23928,7 @@ func ListOriginPoolsWithOptions(client *Client, request *ListOriginPoolsRequest,
 
 // Summary:
 //
-// Lists all origin pools within a site. Supports pagination and searching by origin pool name (exact or fuzzy).
+// Queries all origin address pools under a site. Supports pagination and exact or fuzzy search by origin address pool name.
 //
 // @param request - ListOriginPoolsRequest
 //
@@ -23690,7 +24004,7 @@ func ListOriginRules(client *Client, request *ListOriginRulesRequest) (_result *
 
 // Summary:
 //
-// Lists all custom response pages created by the user. This operation supports pagination, allowing you to retrieve response pages by page number and page size.
+// Lists all custom response pages created by the user. This operation supports pagination and allows you to retrieve the response page list by page number and page size.
 //
 // @param tmpReq - ListPagesRequest
 //
@@ -23748,7 +24062,7 @@ func ListPagesWithOptions(client *Client, tmpReq *ListPagesRequest, runtime *dar
 
 // Summary:
 //
-// Lists all custom response pages created by the user. This operation supports pagination, allowing you to retrieve response pages by page number and page size.
+// Lists all custom response pages created by the user. This operation supports pagination and allows you to retrieve the response page list by page number and page size.
 //
 // @param request - ListPagesRequest
 //
@@ -23766,11 +24080,11 @@ func ListPages(client *Client, request *ListPagesRequest) (_result *ListPagesRes
 
 // Summary:
 //
-// Queries pay-as-you-go plan instances.
+// Queries the pay-as-you-go plan instances.
 //
 // Description:
 //
-// This operation queries pay-as-you-go plan instances under your account and supports filtering and sorting by various conditions.
+// Queries the pay-as-you-go plan instances under your account. You can filter and sort the instances based on various conditions.
 //
 // @param request - ListPostpaidRatePlanInstancesRequest
 //
@@ -23810,11 +24124,11 @@ func ListPostpaidRatePlanInstancesWithOptions(client *Client, request *ListPostp
 
 // Summary:
 //
-// Queries pay-as-you-go plan instances.
+// Queries the pay-as-you-go plan instances.
 //
 // Description:
 //
-// This operation queries pay-as-you-go plan instances under your account and supports filtering and sorting by various conditions.
+// Queries the pay-as-you-go plan instances under your account. You can filter and sort the instances based on various conditions.
 //
 // @param request - ListPostpaidRatePlanInstancesRequest
 //
@@ -23895,7 +24209,7 @@ func ListPostpaidSitePlans(client *Client, request *ListPostpaidSitePlansRequest
 
 // Summary:
 //
-// Queries the minimum plan edition required for a site plan quota to take effect, that is, the minimum plan edition to which the quota must be upgraded for use.
+// Queries the minimum required plan version for site plan quotas, indicating the lowest plan version to which you must upgrade to use a quota.
 //
 // @param request - ListQuotasMinEffectPlanRequest
 //
@@ -23935,7 +24249,7 @@ func ListQuotasMinEffectPlanWithOptions(client *Client, request *ListQuotasMinEf
 
 // Summary:
 //
-// Queries the minimum plan edition required for a site plan quota to take effect, that is, the minimum plan edition to which the quota must be upgraded for use.
+// Queries the minimum required plan version for site plan quotas, indicating the lowest plan version to which you must upgrade to use a quota.
 //
 // @param request - ListQuotasMinEffectPlanRequest
 //
@@ -23953,11 +24267,11 @@ func ListQuotasMinEffectPlan(client *Client, request *ListQuotasMinEffectPlanReq
 
 // Summary:
 //
-// Queries the list of DNS records under a site, including record values, priorities, authentication configurations, etc. Supports filtering by conditions such as record name and record type.
+// Queries the DNS records of a site, including record values, priorities, and authentication configurations. Supports filtering by record name, record type, and other conditions.
 //
 // Description:
 //
-// DNS records corresponding to edge containers, edge functions, and Layer 4 acceleration will not be returned by this API.
+// DNS records associated with edge containers, Edge Routines, and Layer 4 acceleration are not returned by this API operation.
 //
 // @param request - ListRecordsRequest
 //
@@ -23997,11 +24311,11 @@ func ListRecordsWithOptions(client *Client, request *ListRecordsRequest, runtime
 
 // Summary:
 //
-// Queries the list of DNS records under a site, including record values, priorities, authentication configurations, etc. Supports filtering by conditions such as record name and record type.
+// Queries the DNS records of a site, including record values, priorities, and authentication configurations. Supports filtering by record name, record type, and other conditions.
 //
 // Description:
 //
-// DNS records corresponding to edge containers, edge functions, and Layer 4 acceleration will not be returned by this API.
+// DNS records associated with edge containers, Edge Routines, and Layer 4 acceleration are not returned by this API operation.
 //
 // @param request - ListRecordsRequest
 //
@@ -24496,11 +24810,11 @@ func ListRoutineEnvironmentVariables(client *Client, request *ListRoutineEnviron
 
 // Summary:
 //
-// The records associated with the function.
+// Queries the association records of an Edge Routine.
 //
 // Description:
 //
-// Queries the list of related records for a specified edge routine. You can use pagination parameters to retrieve partial results, or use fuzzy keywords to filter specific record entries.
+// Queries the association records of a specified Edge Routine. You can set pagination parameters to retrieve partial results, or use fuzzy keywords to filter specific records.
 //
 // @param request - ListRoutineRelatedRecordsRequest
 //
@@ -24556,11 +24870,11 @@ func ListRoutineRelatedRecordsWithOptions(client *Client, request *ListRoutineRe
 
 // Summary:
 //
-// The records associated with the function.
+// Queries the association records of an Edge Routine.
 //
 // Description:
 //
-// Queries the list of related records for a specified edge routine. You can use pagination parameters to retrieve partial results, or use fuzzy keywords to filter specific record entries.
+// Queries the association records of a specified Edge Routine. You can set pagination parameters to retrieve partial results, or use fuzzy keywords to filter specific records.
 //
 // @param request - ListRoutineRelatedRecordsRequest
 //
@@ -24578,7 +24892,7 @@ func ListRoutineRelatedRecords(client *Client, request *ListRoutineRelatedRecord
 
 // Summary:
 //
-// Queries the function route list of an Edge Routine.
+// Queries the function routes of an Edge Routine.
 //
 // @param request - ListRoutineRoutesRequest
 //
@@ -24630,7 +24944,7 @@ func ListRoutineRoutesWithOptions(client *Client, request *ListRoutineRoutesRequ
 
 // Summary:
 //
-// Queries the function route list of an Edge Routine.
+// Queries the function routes of an Edge Routine.
 //
 // @param request - ListRoutineRoutesRequest
 //
@@ -24764,7 +25078,7 @@ func ListScheduledPreloadJobs(client *Client, request *ListScheduledPreloadJobsR
 
 // Summary:
 //
-// Lists all log delivery tasks that are in progress.
+// Lists the delivery status of all ongoing real-time log tasks.
 //
 // @param request - ListSiteDeliveryTasksRequest
 //
@@ -24804,7 +25118,7 @@ func ListSiteDeliveryTasksWithOptions(client *Client, request *ListSiteDeliveryT
 
 // Summary:
 //
-// Lists all log delivery tasks that are in progress.
+// Lists the delivery status of all ongoing real-time log tasks.
 //
 // @param request - ListSiteDeliveryTasksRequest
 //
@@ -24880,7 +25194,7 @@ func ListSiteFunctions(client *Client, request *ListSiteFunctionsRequest) (_resu
 
 // Summary:
 //
-// Queries the list of back-to-origin client certificates at the site level.
+// Queries the site-level back-to-origin client certificates.
 //
 // @param request - ListSiteOriginClientCertificatesRequest
 //
@@ -24920,7 +25234,7 @@ func ListSiteOriginClientCertificatesWithOptions(client *Client, request *ListSi
 
 // Summary:
 //
-// Queries the list of back-to-origin client certificates at the site level.
+// Queries the site-level back-to-origin client certificates.
 //
 // @param request - ListSiteOriginClientCertificatesRequest
 //
@@ -25530,7 +25844,7 @@ func ListUrlObservations(client *Client, request *ListUrlObservationsRequest) (_
 
 // Summary:
 //
-// Queries all delivery tasks in your Alibaba Cloud account by page. You can filter the delivery tasks by the category of the delivered real-time logs.
+// Lists all task delivery records for a user, and supports filtering by business type and paging.
 //
 // @param request - ListUserDeliveryTasksRequest
 //
@@ -25570,7 +25884,7 @@ func ListUserDeliveryTasksWithOptions(client *Client, request *ListUserDeliveryT
 
 // Summary:
 //
-// Queries all delivery tasks in your Alibaba Cloud account by page. You can filter the delivery tasks by the category of the delivered real-time logs.
+// Lists all task delivery records for a user, and supports filtering by business type and paging.
 //
 // @param request - ListUserDeliveryTasksRequest
 //
@@ -25980,7 +26294,7 @@ func ListVideoProcessings(client *Client, request *ListVideoProcessingsRequest) 
 
 // Summary:
 //
-// Lists all managed rules under Web Application Firewall (WAF) or filters rules based on specific conditions. You can use this operation to query detailed information about WAF managed rules in a paginated manner.
+// Lists all managed rules under Web Application Firewall (WAF) or filters the rules based on specific conditions. You can use this operation to query the details of WAF managed rules in a paginated manner.
 //
 // @param tmpReq - ListWafManagedRulesRequest
 //
@@ -26070,7 +26384,7 @@ func ListWafManagedRulesWithOptions(client *Client, tmpReq *ListWafManagedRulesR
 
 // Summary:
 //
-// Lists all managed rules under Web Application Firewall (WAF) or filters rules based on specific conditions. You can use this operation to query detailed information about WAF managed rules in a paginated manner.
+// Lists all managed rules under Web Application Firewall (WAF) or filters the rules based on specific conditions. You can use this operation to query the details of WAF managed rules in a paginated manner.
 //
 // @param request - ListWafManagedRulesRequest
 //
@@ -26154,7 +26468,7 @@ func ListWafPhases(client *Client, request *ListWafPhasesRequest) (_result *List
 
 // Summary:
 //
-// Lists all rules or filters rules by specific conditions under Web Application Firewall (WAF). You can use this operation to query detailed information about WAF rules in a paged manner.
+// Lists all Web Application Firewall (WAF) rules or filters rules based on specific conditions. You can call this operation to query the details of WAF rules in a paginated manner.
 //
 // @param tmpReq - ListWafRulesRequest
 //
@@ -26228,7 +26542,7 @@ func ListWafRulesWithOptions(client *Client, tmpReq *ListWafRulesRequest, runtim
 
 // Summary:
 //
-// Lists all rules or filters rules by specific conditions under Web Application Firewall (WAF). You can use this operation to query detailed information about WAF rules in a paged manner.
+// Lists all Web Application Firewall (WAF) rules or filters rules based on specific conditions. You can call this operation to query the details of WAF rules in a paginated manner.
 //
 // @param request - ListWafRulesRequest
 //
@@ -26246,7 +26560,7 @@ func ListWafRules(client *Client, request *ListWafRulesRequest) (_result *ListWa
 
 // Summary:
 //
-// Lists the rulesets under the current WAF execution phase. Queries basic information and status of rulesets with paging support.
+// Lists the rulesets in the current WAF phase and retrieves the basic information and status of the rulesets through paging in a paged query.
 //
 // @param tmpReq - ListWafRulesetsRequest
 //
@@ -26316,7 +26630,7 @@ func ListWafRulesetsWithOptions(client *Client, tmpReq *ListWafRulesetsRequest, 
 
 // Summary:
 //
-// Lists the rulesets under the current WAF execution phase. Queries basic information and status of rulesets with paging support.
+// Lists the rulesets in the current WAF phase and retrieves the basic information and status of the rulesets through paging in a paged query.
 //
 // @param request - ListWafRulesetsRequest
 //
@@ -26334,7 +26648,7 @@ func ListWafRulesets(client *Client, request *ListWafRulesetsRequest) (_result *
 
 // Summary:
 //
-// Lists the template rules in WAF. These rules are typically predefined rulesets for quickly enabling protection against common attack types.
+// Lists the template rules in Web Application Firewall (WAF). These rules are typically predefined rule sets used to quickly enable protection against common attack types.
 //
 // @param tmpReq - ListWafTemplateRulesRequest
 //
@@ -26396,7 +26710,7 @@ func ListWafTemplateRulesWithOptions(client *Client, tmpReq *ListWafTemplateRule
 
 // Summary:
 //
-// Lists the template rules in WAF. These rules are typically predefined rulesets for quickly enabling protection against common attack types.
+// Lists the template rules in Web Application Firewall (WAF). These rules are typically predefined rule sets used to quickly enable protection against common attack types.
 //
 // @param request - ListWafTemplateRulesRequest
 //
@@ -26484,11 +26798,11 @@ func ListWafUsageOfRules(client *Client, request *ListWafUsageOfRulesRequest) (_
 
 // Summary:
 //
-// Queries waiting room events for a waiting room.
+// Queries the details of waiting room events.
 //
 // Description:
 //
-// Use this operation to query details of all waiting room events related to a waiting room in a website.
+// Queries the details of all waiting room events associated with a specified site ID and waiting room ID.
 //
 // @param request - ListWaitingRoomEventsRequest
 //
@@ -26528,11 +26842,11 @@ func ListWaitingRoomEventsWithOptions(client *Client, request *ListWaitingRoomEv
 
 // Summary:
 //
-// Queries waiting room events for a waiting room.
+// Queries the details of waiting room events.
 //
 // Description:
 //
-// Use this operation to query details of all waiting room events related to a waiting room in a website.
+// Queries the details of all waiting room events associated with a specified site ID and waiting room ID.
 //
 // @param request - ListWaitingRoomEventsRequest
 //
@@ -30233,7 +30547,7 @@ func UpdateCacheReserve(client *Client, request *UpdateCacheReserveRequest) (_re
 
 // Summary:
 //
-// # Cache Reserve Specification Change
+// Modifies the specifications of cache retention.
 //
 // @param request - UpdateCacheReserveSpecRequest
 //
@@ -30289,7 +30603,7 @@ func UpdateCacheReserveSpecWithOptions(client *Client, request *UpdateCacheReser
 
 // Summary:
 //
-// # Cache Reserve Specification Change
+// Modifies the specifications of cache retention.
 //
 // @param request - UpdateCacheReserveSpecRequest
 //
@@ -31603,6 +31917,98 @@ func UpdateEnvironmentVersion(client *Client, request *UpdateEnvironmentVersionR
 
 // Summary:
 //
+// Modifies the error code redirect configuration.
+//
+// @param tmpReq - UpdateErrorPagesRedirectRuleRequest
+//
+// @param runtime - runtime options for this request RuntimeOptions
+//
+// @return UpdateErrorPagesRedirectRuleResponse
+func UpdateErrorPagesRedirectRuleWithOptions(client *Client, tmpReq *UpdateErrorPagesRedirectRuleRequest, runtime *dara.RuntimeOptions) (_result *UpdateErrorPagesRedirectRuleResponse, _err error) {
+	if dara.BoolValue(client.EnableValidate) == true {
+		_err = tmpReq.Validate()
+		if _err != nil {
+			return _result, _err
+		}
+	}
+	request := &UpdateErrorPagesRedirectRuleShrinkRequest{}
+	openapiutil.Convert(tmpReq, request)
+	if !dara.IsNil(tmpReq.ErrorPagesRedirect) {
+		request.ErrorPagesRedirectShrink = openapiutil.ArrayToStringWithSpecifiedStyle(tmpReq.ErrorPagesRedirect, dara.String("ErrorPagesRedirect"), dara.String("json"))
+	}
+
+	query := map[string]interface{}{}
+	if !dara.IsNil(request.ConfigId) {
+		query["ConfigId"] = request.ConfigId
+	}
+
+	if !dara.IsNil(request.ErrorPagesRedirectShrink) {
+		query["ErrorPagesRedirect"] = request.ErrorPagesRedirectShrink
+	}
+
+	if !dara.IsNil(request.Rule) {
+		query["Rule"] = request.Rule
+	}
+
+	if !dara.IsNil(request.RuleEnable) {
+		query["RuleEnable"] = request.RuleEnable
+	}
+
+	if !dara.IsNil(request.RuleName) {
+		query["RuleName"] = request.RuleName
+	}
+
+	if !dara.IsNil(request.Sequence) {
+		query["Sequence"] = request.Sequence
+	}
+
+	if !dara.IsNil(request.SiteId) {
+		query["SiteId"] = request.SiteId
+	}
+
+	req := &openapiutil.OpenApiRequest{
+		Query: openapiutil.Query(query),
+	}
+	params := &openapiutil.Params{
+		Action:      dara.String("UpdateErrorPagesRedirectRule"),
+		Version:     dara.String("2024-09-10"),
+		Protocol:    dara.String("HTTPS"),
+		Pathname:    dara.String("/"),
+		Method:      dara.String("POST"),
+		AuthType:    dara.String("AK"),
+		Style:       dara.String("RPC"),
+		ReqBodyType: dara.String("formData"),
+		BodyType:    dara.String("json"),
+	}
+	_result = &UpdateErrorPagesRedirectRuleResponse{}
+	_body, _err := client.CallApi(params, req, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = dara.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Summary:
+//
+// Modifies the error code redirect configuration.
+//
+// @param request - UpdateErrorPagesRedirectRuleRequest
+//
+// @return UpdateErrorPagesRedirectRuleResponse
+func UpdateErrorPagesRedirectRule(client *Client, request *UpdateErrorPagesRedirectRuleRequest) (_result *UpdateErrorPagesRedirectRuleResponse, _err error) {
+	runtime := &dara.RuntimeOptions{}
+	_result = &UpdateErrorPagesRedirectRuleResponse{}
+	_body, _err := UpdateErrorPagesRedirectRuleWithOptions(client,request, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Summary:
+//
 // Modify HTTP incoming request header configuration.
 //
 // @param tmpReq - UpdateHttpIncomingRequestHeaderModificationRuleRequest
@@ -31971,7 +32377,7 @@ func UpdateHttpResponseHeaderModificationRule(client *Client, request *UpdateHtt
 
 // Summary:
 //
-// Update the HTTPS Application Configuration.
+// Modifies the HTTPS application configuration.
 //
 // @param request - UpdateHttpsApplicationConfigurationRequest
 //
@@ -32087,7 +32493,7 @@ func UpdateHttpsApplicationConfigurationWithOptions(client *Client, request *Upd
 
 // Summary:
 //
-// Update the HTTPS Application Configuration.
+// Modifies the HTTPS application configuration.
 //
 // @param request - UpdateHttpsApplicationConfigurationRequest
 //
@@ -32471,11 +32877,11 @@ func UpdateList(client *Client, request *UpdateListRequest) (_result *UpdateList
 
 // Summary:
 //
-// To modify an existing load balancer, you must specify its load balancer ID.
+// Modifies the information of an existing load balancing instance. The load balancing instance ID is required to identify the load balancing instance to be modified.
 //
 // Description:
 //
-// This operation modifies multiple configurations for a load balancer, including its name, acceleration status, session persistence policy, and advanced traffic routing settings.	Notice: Changes to certain parameters might affect the stability of existing services. Proceed with caution.
+// This operation allows you to modify multiple configurations of a load balancing instance, including but not limited to the load balancing instance name, acceleration status, session persistence policy, and various advanced settings related to traffic routing.	Notice: Changes to certain parameters may affect the stability of existing services. Proceed with caution.
 //
 // @param tmpReq - UpdateLoadBalancerRequest
 //
@@ -32597,11 +33003,11 @@ func UpdateLoadBalancerWithOptions(client *Client, tmpReq *UpdateLoadBalancerReq
 
 // Summary:
 //
-// To modify an existing load balancer, you must specify its load balancer ID.
+// Modifies the information of an existing load balancing instance. The load balancing instance ID is required to identify the load balancing instance to be modified.
 //
 // Description:
 //
-// This operation modifies multiple configurations for a load balancer, including its name, acceleration status, session persistence policy, and advanced traffic routing settings.	Notice: Changes to certain parameters might affect the stability of existing services. Proceed with caution.
+// This operation allows you to modify multiple configurations of a load balancing instance, including but not limited to the load balancing instance name, acceleration status, session persistence policy, and various advanced settings related to traffic routing.	Notice: Changes to certain parameters may affect the stability of existing services. Proceed with caution.
 //
 // @param request - UpdateLoadBalancerRequest
 //
@@ -32619,7 +33025,7 @@ func UpdateLoadBalancer(client *Client, request *UpdateLoadBalancerRequest) (_re
 
 // Summary:
 //
-// Modify the site hosting transformation configuration.
+// Modifies the site hosting transformation configuration.
 //
 // @param request - UpdateManagedTransformRequest
 //
@@ -32679,7 +33085,7 @@ func UpdateManagedTransformWithOptions(client *Client, request *UpdateManagedTra
 
 // Summary:
 //
-// Modify the site hosting transformation configuration.
+// Modifies the site hosting transformation configuration.
 //
 // @param request - UpdateManagedTransformRequest
 //
@@ -32879,7 +33285,7 @@ func UpdateOriginPool(client *Client, request *UpdateOriginPoolRequest) (_result
 
 // Summary:
 //
-// Modify the origin protection feature to enable or disable origin fetch convergence.
+// Modifies the origin protection feature to enable or disable back-to-origin convergence.
 //
 // @param request - UpdateOriginProtectionRequest
 //
@@ -32931,7 +33337,7 @@ func UpdateOriginProtectionWithOptions(client *Client, request *UpdateOriginProt
 
 // Summary:
 //
-// Modify the origin protection feature to enable or disable origin fetch convergence.
+// Modifies the origin protection feature to enable or disable back-to-origin convergence.
 //
 // @param request - UpdateOriginProtectionRequest
 //
@@ -33393,23 +33799,23 @@ func UpdateRatePlanSpec(client *Client, request *UpdateRatePlanSpecRequest) (_re
 
 // Summary:
 //
-// Updates a DNS record. Various record types and origin authentication configurations are supported.
+// Updates a DNS record and supports multiple record types and origin server authentication configurations.
 //
 // Description:
 //
-// This API operation allows you to update a DNS record, including but not limited to A/AAAA, CNAME, NS, MX, TXT, CAA, SRV, and URI record types. You can modify the record content by specifying the corresponding record value, priority, flag, and other fields. For CNAME origin servers that require authentication, such as OSS and S3, this API operation also supports configuring origin authentication information to ensure secure access.
+// This API operation allows you to update DNS records, including but not limited to A, AAAA, CNAME, NS, MX, TXT, CAA, SRV, and URI types. You can modify the record content by passing the corresponding record value, priority, flag, and other fields. For CNAME origin servers that require authentication, such as OSS and S3, this API operation also supports configuring origin server authentication information to ensure secure access.
 //
-// ### Before you begin
+// ### Precautions
 //
-// - The record value (Value) must match the record type. For example, a CNAME record must correspond to a target domain name.
+// - The record value must match the record type. For example, a CNAME record must correspond to the target domain name.
 //
-// - Certain record types, such as MX and SRV, require a priority (Priority) value.
+// - You must specify the priority for certain record types, such as MX and SRV.
 //
-// - CAA records require specific fields such as Flag and Tag.
+// - You must provide specific fields such as Flag and Tag for CAA records.
 //
-// - When updating security records such as CERT and SSHFP, accurately set the Type, Algorithm, and other fields.
+// - When updating security records such as CERT and SSHFP, you must accurately set fields such as Type and Algorithm.
 //
-// - When using OSS or S3 as the origin server, configure the authentication details in AuthConf based on the permission settings.
+// - When using OSS or S3 as the origin server, configure the authentication details in AuthConf based on the permissions.
 //
 // @param tmpReq - UpdateRecordRequest
 //
@@ -33507,23 +33913,23 @@ func UpdateRecordWithOptions(client *Client, tmpReq *UpdateRecordRequest, runtim
 
 // Summary:
 //
-// Updates a DNS record. Various record types and origin authentication configurations are supported.
+// Updates a DNS record and supports multiple record types and origin server authentication configurations.
 //
 // Description:
 //
-// This API operation allows you to update a DNS record, including but not limited to A/AAAA, CNAME, NS, MX, TXT, CAA, SRV, and URI record types. You can modify the record content by specifying the corresponding record value, priority, flag, and other fields. For CNAME origin servers that require authentication, such as OSS and S3, this API operation also supports configuring origin authentication information to ensure secure access.
+// This API operation allows you to update DNS records, including but not limited to A, AAAA, CNAME, NS, MX, TXT, CAA, SRV, and URI types. You can modify the record content by passing the corresponding record value, priority, flag, and other fields. For CNAME origin servers that require authentication, such as OSS and S3, this API operation also supports configuring origin server authentication information to ensure secure access.
 //
-// ### Before you begin
+// ### Precautions
 //
-// - The record value (Value) must match the record type. For example, a CNAME record must correspond to a target domain name.
+// - The record value must match the record type. For example, a CNAME record must correspond to the target domain name.
 //
-// - Certain record types, such as MX and SRV, require a priority (Priority) value.
+// - You must specify the priority for certain record types, such as MX and SRV.
 //
-// - CAA records require specific fields such as Flag and Tag.
+// - You must provide specific fields such as Flag and Tag for CAA records.
 //
-// - When updating security records such as CERT and SSHFP, accurately set the Type, Algorithm, and other fields.
+// - When updating security records such as CERT and SSHFP, you must accurately set fields such as Type and Algorithm.
 //
-// - When using OSS or S3 as the origin server, configure the authentication details in AuthConf based on the permission settings.
+// - When using OSS or S3 as the origin server, configure the authentication details in AuthConf based on the permissions.
 //
 // @param request - UpdateRecordRequest
 //
@@ -34485,7 +34891,7 @@ func UpdateSiteDeliveryTask(client *Client, request *UpdateSiteDeliveryTaskReque
 
 // Summary:
 //
-// Changes the status of a real-time log delivery task.
+// Modifies the delivery status of a real-time log task.
 //
 // @param request - UpdateSiteDeliveryTaskStatusRequest
 //
@@ -34525,7 +34931,7 @@ func UpdateSiteDeliveryTaskStatusWithOptions(client *Client, request *UpdateSite
 
 // Summary:
 //
-// Changes the status of a real-time log delivery task.
+// Modifies the delivery status of a real-time log task.
 //
 // @param request - UpdateSiteDeliveryTaskStatusRequest
 //
@@ -34543,7 +34949,7 @@ func UpdateSiteDeliveryTaskStatus(client *Client, request *UpdateSiteDeliveryTas
 
 // Summary:
 //
-// Changes the plan instance associated with a site.
+// Replaces the plan instance for a site.
 //
 // @param request - UpdateSiteInstanceRequest
 //
@@ -34595,7 +35001,7 @@ func UpdateSiteInstanceWithOptions(client *Client, request *UpdateSiteInstanceRe
 
 // Summary:
 //
-// Changes the plan instance associated with a site.
+// Replaces the plan instance for a site.
 //
 // @param request - UpdateSiteInstanceRequest
 //
@@ -34753,11 +35159,11 @@ func UpdateSitePause(client *Client, request *UpdateSitePauseRequest) (_result *
 
 // Summary:
 //
-// Modifies the custom nameserver (NS) names for a single site.
+// Modifies the custom NS names for a single site.
 //
 // Description:
 //
-// The site plan must be Enterprise Edition or higher to use the custom NS feature.
+// The custom NS feature is available only for sites on the Enterprise edition plan.
 //
 // @param request - UpdateSiteVanityNSRequest
 //
@@ -34805,11 +35211,11 @@ func UpdateSiteVanityNSWithOptions(client *Client, request *UpdateSiteVanityNSRe
 
 // Summary:
 //
-// Modifies the custom nameserver (NS) names for a single site.
+// Modifies the custom NS names for a single site.
 //
 // Description:
 //
-// The site plan must be Enterprise Edition or higher to use the custom NS feature.
+// The custom NS feature is available only for sites on the Enterprise edition plan.
 //
 // @param request - UpdateSiteVanityNSRequest
 //
@@ -34827,7 +35233,7 @@ func UpdateSiteVanityNS(client *Client, request *UpdateSiteVanityNSRequest) (_re
 
 // Summary:
 //
-// Updates a slider CAPTCHA page.
+// Updates the slider CAPTCHA page.
 //
 // @param tmpReq - UpdateSliderCaptchaPageRequest
 //
@@ -34901,7 +35307,7 @@ func UpdateSliderCaptchaPageWithOptions(client *Client, tmpReq *UpdateSliderCapt
 
 // Summary:
 //
-// Updates a slider CAPTCHA page.
+// Updates the slider CAPTCHA page.
 //
 // @param request - UpdateSliderCaptchaPageRequest
 //
@@ -34985,13 +35391,13 @@ func UpdateTieredCache(client *Client, request *UpdateTieredCacheRequest) (_resu
 
 // Summary:
 //
-// Modifies the forwarding rule configurations of a Layer 4 application under a specified site.
+// Modifies the configurations such as forwarding rules for a Layer 4 application under a specified site.
 //
 // Description:
 //
-// If ListTransportLayerApplications returns an empty Layer 4 acceleration application list, use CreateTransportLayerApplication to create a Layer 4 acceleration application, and then use this API to modify the configurations of the Layer 4 acceleration application.
+// If ListTransportLayerApplications returns an empty list of Layer 4 accelerated applications, you must use CreateTransportLayerApplication to create a Layer 4 accelerated application, and then use this API operation to modify multiple configurations of the application.
 //
-// When creating a Layer 4 acceleration application, the selected site must be an activated site. After creating a site, call the VerifySite API to verify it. A site that passes verification is automatically activated, indicated by the response parameter Passed=true.
+// When you create a Layer 4 accelerated application, the selected site must be activated. After you create a site, call the VerifySite API operation to verify the site. A site that passes the verification is automatically activated, which means the response parameter Passed is set to true.
 //
 // @param tmpReq - UpdateTransportLayerApplicationRequest
 //
@@ -35069,13 +35475,13 @@ func UpdateTransportLayerApplicationWithOptions(client *Client, tmpReq *UpdateTr
 
 // Summary:
 //
-// Modifies the forwarding rule configurations of a Layer 4 application under a specified site.
+// Modifies the configurations such as forwarding rules for a Layer 4 application under a specified site.
 //
 // Description:
 //
-// If ListTransportLayerApplications returns an empty Layer 4 acceleration application list, use CreateTransportLayerApplication to create a Layer 4 acceleration application, and then use this API to modify the configurations of the Layer 4 acceleration application.
+// If ListTransportLayerApplications returns an empty list of Layer 4 accelerated applications, you must use CreateTransportLayerApplication to create a Layer 4 accelerated application, and then use this API operation to modify multiple configurations of the application.
 //
-// When creating a Layer 4 acceleration application, the selected site must be an activated site. After creating a site, call the VerifySite API to verify it. A site that passes verification is automatically activated, indicated by the response parameter Passed=true.
+// When you create a Layer 4 accelerated application, the selected site must be activated. After you create a site, call the VerifySite API operation to verify the site. A site that passes the verification is automatically activated, which means the response parameter Passed is set to true.
 //
 // @param request - UpdateTransportLayerApplicationRequest
 //
@@ -35163,11 +35569,11 @@ func UpdateUrlObservation(client *Client, request *UpdateUrlObservationRequest) 
 
 // Summary:
 //
-// Modifies the delivery task configuration of a user, allowing you to set the task name, select fields, specify the real-time log type, and adjust the discard rate.
+// Modifies the task delivery configuration for a user, allowing you to set the task name, select fields, specify the real-time log type, and adjust the discard rate.
 //
 // Description:
 //
-// Before calling this operation, you must have successfully created a task with the target TaskName by using CreateUserDeliveryTask. Only then can you use this operation to update the delivery task configuration.
+// Before calling this operation, you must create a task with the specified TaskName by calling CreateUserDeliveryTask. You can then use this operation to update the delivery task configuration.
 //
 // @param request - UpdateUserDeliveryTaskRequest
 //
@@ -35231,11 +35637,11 @@ func UpdateUserDeliveryTaskWithOptions(client *Client, request *UpdateUserDelive
 
 // Summary:
 //
-// Modifies the delivery task configuration of a user, allowing you to set the task name, select fields, specify the real-time log type, and adjust the discard rate.
+// Modifies the task delivery configuration for a user, allowing you to set the task name, select fields, specify the real-time log type, and adjust the discard rate.
 //
 // Description:
 //
-// Before calling this operation, you must have successfully created a task with the target TaskName by using CreateUserDeliveryTask. Only then can you use this operation to update the delivery task configuration.
+// Before calling this operation, you must create a task with the specified TaskName by calling CreateUserDeliveryTask. You can then use this operation to update the delivery task configuration.
 //
 // @param request - UpdateUserDeliveryTaskRequest
 //
@@ -35253,13 +35659,11 @@ func UpdateUserDeliveryTask(client *Client, request *UpdateUserDeliveryTaskReque
 
 // Summary:
 //
-// Changes the status of a delivery task in your Alibaba Cloud account.
+// Enables or disables a user task delivery.
 //
 // Description:
 //
-// ## [](#)
-//
-// Use this operation to enable or disable a delivery task by using TaskName and Method. The response includes the most recent status and operation result details of the task.
+// This operation enables or disables the data delivery feature of a task based on the task name and method. The method must be specified as online or offline. The response returns the latest status of the task and the operation result details.
 //
 // @param request - UpdateUserDeliveryTaskStatusRequest
 //
@@ -35299,13 +35703,11 @@ func UpdateUserDeliveryTaskStatusWithOptions(client *Client, request *UpdateUser
 
 // Summary:
 //
-// Changes the status of a delivery task in your Alibaba Cloud account.
+// Enables or disables a user task delivery.
 //
 // Description:
 //
-// ## [](#)
-//
-// Use this operation to enable or disable a delivery task by using TaskName and Method. The response includes the most recent status and operation result details of the task.
+// This operation enables or disables the data delivery feature of a task based on the task name and method. The method must be specified as online or offline. The response returns the latest status of the task and the operation result details.
 //
 // @param request - UpdateUserDeliveryTaskStatusRequest
 //
@@ -35323,17 +35725,17 @@ func UpdateUserDeliveryTaskStatus(client *Client, request *UpdateUserDeliveryTas
 
 // Summary:
 //
-// Modifies the WAF ruleset configuration for a specified instance, including its position, name, and other properties.
+// Modifies the configuration of a WAF rule set for a specified instance, including the position and name.
 //
 // Description:
 //
 // ## Request description
 //
-// - This operation updates an existing WAF ruleset. You can modify the position, name, description, status, and expression of the ruleset.
+// - This operation allows you to update an existing WAF rule set. You can modify the position, name, description, status, and expression of the rule set.
 //
-// - Include only the parameters that you want to modify. Omit parameters that you do not want to change.
+// - Specify only the parameters that you want to modify. You do not need to pass the key of a parameter that remains unchanged.
 //
-// - Note: Before you call this operation, ensure that the `InstanceId` and `Id` values are correct. Otherwise, the request may fail.
+// - Note: Make sure that you have obtained the correct `InstanceId` and `Id` values before you call this operation. Otherwise, the request may fail.
 //
 // @param tmpReq - UpdateUserWafRulesetRequest
 //
@@ -35421,17 +35823,17 @@ func UpdateUserWafRulesetWithOptions(client *Client, tmpReq *UpdateUserWafRulese
 
 // Summary:
 //
-// Modifies the WAF ruleset configuration for a specified instance, including its position, name, and other properties.
+// Modifies the configuration of a WAF rule set for a specified instance, including the position and name.
 //
 // Description:
 //
 // ## Request description
 //
-// - This operation updates an existing WAF ruleset. You can modify the position, name, description, status, and expression of the ruleset.
+// - This operation allows you to update an existing WAF rule set. You can modify the position, name, description, status, and expression of the rule set.
 //
-// - Include only the parameters that you want to modify. Omit parameters that you do not want to change.
+// - Specify only the parameters that you want to modify. You do not need to pass the key of a parameter that remains unchanged.
 //
-// - Note: Before you call this operation, ensure that the `InstanceId` and `Id` values are correct. Otherwise, the request may fail.
+// - Note: Make sure that you have obtained the correct `InstanceId` and `Id` values before you call this operation. Otherwise, the request may fail.
 //
 // @param request - UpdateUserWafRulesetRequest
 //
@@ -35715,7 +36117,7 @@ func UpdateWafRule(client *Client, request *UpdateWafRuleRequest) (_result *Upda
 
 // Summary:
 //
-// Updates a WAF ruleset based on its ID.
+// Updates a WAF rule set based on the ID of the rule set.
 //
 // @param request - UpdateWafRulesetRequest
 //
@@ -35773,7 +36175,7 @@ func UpdateWafRulesetWithOptions(client *Client, request *UpdateWafRulesetReques
 
 // Summary:
 //
-// Updates a WAF ruleset based on its ID.
+// Updates a WAF rule set based on the ID of the rule set.
 //
 // @param request - UpdateWafRulesetRequest
 //
