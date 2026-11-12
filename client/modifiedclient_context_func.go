@@ -2101,7 +2101,7 @@ func CreateEnvironmentWithContext(ctx context.Context, client *Client, request *
 
 // Summary:
 //
-// Creates an error code redirection rule.
+// Creates an error code redirect rule.
 //
 // @param tmpReq - CreateErrorPagesRedirectRuleRequest
 //
@@ -6129,7 +6129,7 @@ func DeleteEnvironmentWithContext(ctx context.Context, client *Client, request *
 
 // Summary:
 //
-// Deletes the error code redirection configuration.
+// Deletes the error code redirect configuration.
 //
 // @param request - DeleteErrorPagesRedirectRuleRequest
 //
@@ -13093,7 +13093,7 @@ func GetPurgeQuotaWithContext(ctx context.Context, client *Client, request *GetP
 
 // Summary:
 //
-// Queries the fields in real-time logs based on the log category.
+// Retrieves the list of fields for real-time logs based on the log business type.
 //
 // @param request - GetRealtimeDeliveryFieldRequest
 //
